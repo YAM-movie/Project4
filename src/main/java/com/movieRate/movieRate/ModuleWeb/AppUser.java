@@ -1,17 +1,17 @@
 package com.movieRate.movieRate.ModuleWeb;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Entity
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,7 @@ public class AppUser {
     private String Email;
     private Timestamp DateOfBarth;
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Review>reviews;
+    private List<Review> reviews;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Movie> favoriteMovies;
 }
