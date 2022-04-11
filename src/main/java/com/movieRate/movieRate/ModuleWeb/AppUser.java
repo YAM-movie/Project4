@@ -12,9 +12,8 @@ import java.util.Collection;
 import java.util.List;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+
+
 @Entity
 public class AppUser implements UserDetails {
     @Id
@@ -34,6 +33,83 @@ public class AppUser implements UserDetails {
     public AppUser(String username, String password) {
         this.username = password;
         this.password = password;
+    }
+
+    public AppUser() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public Timestamp getDateOfBarth() {
+        return DateOfBarth;
+    }
+
+    public void setDateOfBarth(Timestamp dateOfBarth) {
+        DateOfBarth = dateOfBarth;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Movie> getFavoriteMovies() {
+        return favoriteMovies;
+    }
+
+    public void setFavoriteMovies(List<Movie> favoriteMovies) {
+        this.favoriteMovies = favoriteMovies;
     }
 
     @Override

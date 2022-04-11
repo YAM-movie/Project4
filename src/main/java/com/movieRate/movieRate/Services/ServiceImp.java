@@ -8,41 +8,36 @@ import com.movieRate.movieRate.ModuleWeb.Review;
 import com.movieRate.movieRate.Repository.AppUserRepo;
 import com.movieRate.movieRate.Repository.MovieRepo;
 import com.movieRate.movieRate.Repository.ReviewRepo;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
-
 import java.io.*;
 import java.lang.reflect.Type;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.common.reflect.TypeToken;
 
 @Service
 public class ServiceImp implements Services {
 
     @Autowired
-    AppUserRepo appUserRepo;
-    @Autowired
-    MovieRepo movieRepo;
+    private AppUserRepo appUserRepo;
 
     @Autowired
-    ReviewRepo reviewRepo;
+    private MovieRepo movieRepo;
+
+    @Autowired
+    private ReviewRepo reviewRepo;
 
 
     @Override
     public Movie getOneMovie(Long id, Model model) {
-        return null;
+        return movieRepo.getById(id);
     }
 
     @Override
     public List<Movie> getAllMovies(Model model) {
-        return null;
+        return movieRepo.findAll();
     }
 
     @Override
@@ -67,6 +62,7 @@ public class ServiceImp implements Services {
 
     @Override
     public List<Movie> getAPi() {
+
         File file = new File("Api.json");
         BufferedReader bufferedReader;
         String line;
@@ -78,10 +74,8 @@ public class ServiceImp implements Services {
                 while ((line = bufferedReader.readLine()) != null) {
                     message += line;
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
         }
         Type quote = new TypeToken<ArrayList<Movie>>() {
@@ -92,10 +86,17 @@ public class ServiceImp implements Services {
         return result;
     }
 
-//    private void SaveMovie(List<Movie> movies) {
-////        if (movieRepo.findAll()==null){
-////            movieRepo.saveAll(movies);
-////        }
-//        movieRepo.save(new Movie("test"));
-//    }
+    @Override
+    public void saveMovie(Movie movie, Model model) {
+
+    }
+
+    private void SaveMovie(List<Movie> movies) {
+        List<Movie> movies1 = movieRepo.findAll();
+        if (movies1.size() < 100) {
+         movieRepo.saveAll(movies);
+        }
+
+
+    }
 }

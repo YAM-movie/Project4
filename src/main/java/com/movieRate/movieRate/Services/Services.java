@@ -15,4 +15,6 @@ public interface Services {
     AppUser getUser(Long id);
     List<AppUser> getALLUsers(Model model);
     List<Movie> getAPi();
+    void saveMovie(Movie movie ,Model model);
+
 }

@@ -9,8 +9,7 @@ public class MovieRateApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MovieRateApplication.class, args);
-		ServiceImp serviceImp = new ServiceImp();
-		serviceImp.getAPi();
+		
 	}
 
 }
