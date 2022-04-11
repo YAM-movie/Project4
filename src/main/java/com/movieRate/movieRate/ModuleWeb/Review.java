@@ -18,7 +18,6 @@ public class Review {
     private Timestamp date;
     private String body;
     private int rate;
-
     @ManyToOne
-    AppUser users;
+    AppUser user;
 }
