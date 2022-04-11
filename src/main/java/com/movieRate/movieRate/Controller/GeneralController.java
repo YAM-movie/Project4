@@ -1,14 +1,18 @@
 package com.movieRate.movieRate.Controller;
 
+import com.movieRate.movieRate.ModuleWeb.Movie;
+import com.movieRate.movieRate.Services.ServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@RequestMapping("/movieRate")
 public class GeneralController {
-
+    @Autowired
+    ServiceImp serviceImp;
 
     @GetMapping("/")
     public String HomePage() {
@@ -29,8 +33,12 @@ public class GeneralController {
     @PostMapping("/signup")
     public String signupUser(@RequestParam String username,
                              @RequestParam String password) {
-
         return "login";
+    }
+
+    @GetMapping("/movie/{id}")
+    Movie getMovie(@PathVariable Long id, Model model) {
+        return serviceImp.getOneMovie(id, model);
     }
 }
 
