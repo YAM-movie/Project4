@@ -17,6 +17,11 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
     @Column(length = 1000)
     private String overview;
     private String imgurl;
