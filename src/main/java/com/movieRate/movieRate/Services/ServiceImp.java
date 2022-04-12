@@ -33,7 +33,9 @@ public class ServiceImp implements Services {
     @Autowired
     private ReviewRepo reviewRepo;
 
+
     //get Movie by Movie id
+
     @Override
     public Movie getOneMovie(Long id, Model model) {
         return movieRepo.getById(id);
@@ -101,8 +103,10 @@ public class ServiceImp implements Services {
         Type data = new TypeToken<ArrayList<Movie>>() {
         }.getType();
         // it will convert Json type format to Gson type  object
+
         List<Movie> result = new Gson().fromJson(message, data);
         SaveMovie(result);
+
         return result;
     }
 
@@ -111,7 +115,12 @@ public class ServiceImp implements Services {
 
     }
 
-    private void SaveMovie(List<Movie> movies) {
+    @Override
+    public List<Movie> getTrending() {
+        return movieRepo.getTrending();
+    }
+
+    private void SaveMovieApi(List<Movie> movies) {
         List<Movie> movies1 = movieRepo.findAll();
         if (movies1.size() < 100) {
             movieRepo.saveAll(movies);
@@ -119,8 +128,10 @@ public class ServiceImp implements Services {
 
 
     }
+
     @Override
     public List<Movie> getTrending() {
         return movieRepo.getTrending();
     }
 }
+

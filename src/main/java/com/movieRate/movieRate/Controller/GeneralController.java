@@ -3,6 +3,7 @@ package com.movieRate.movieRate.Controller;
 import com.movieRate.movieRate.ModuleWeb.AppUser;
 import com.movieRate.movieRate.ModuleWeb.Movie;
 import com.movieRate.movieRate.Services.ServiceImp;
+import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,9 @@ import java.util.List;
 
 
 @Controller
+
 //@RequestMapping("/movieRate")
+
 public class GeneralController {
     @Autowired
     ServiceImp serviceImp;
@@ -20,6 +23,7 @@ public class GeneralController {
     @GetMapping("/")
     public String HomePage() {
         serviceImp.getAPi();
+
         return "home";
     }
 
