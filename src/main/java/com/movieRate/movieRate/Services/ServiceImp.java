@@ -1,6 +1,7 @@
 package com.movieRate.movieRate.Services;
 
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.movieRate.movieRate.ModuleWeb.AppUser;
 import com.movieRate.movieRate.ModuleWeb.Movie;
@@ -11,11 +12,14 @@ import com.movieRate.movieRate.Repository.ReviewRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.common.reflect.TypeToken;
 
 @Service
 public class ServiceImp implements Services {
@@ -30,36 +34,52 @@ public class ServiceImp implements Services {
     private ReviewRepo reviewRepo;
 
 
-
+    //get Movie by Movie id
 
     @Override
     public Movie getOneMovie(Long id, Model model) {
         return movieRepo.getById(id);
     }
 
+    //get All Movies
     @Override
     public List<Movie> getAllMovies(Model model) {
         return movieRepo.findAll();
     }
 
+    //get One Review by Review id
     @Override
     public Review getOneReview(Long id, Model model) {
-        return null;
+        return reviewRepo.getById(id);
     }
 
+    //get All Reviews for one Movie by id of movie
     @Override
     public List<Review> getAllReviewForOneMovie(Long MovieId, Model model) {
-        return null;
+        Movie Mov = movieRepo.getById(MovieId);
+        return Mov.getReviews();
+
     }
 
+    //get All user Reviews by id of user
     @Override
-    public AppUser getUser(Long id) {
-        return null;
+    public AppUser getUserReviews(Long id, Model m) {
+        AppUser user = appUserRepo.getById(id);
+        return (AppUser) user.getReviews();
     }
+
+    //get user by id of user
+    @Override
+    public AppUser getUser(Long id, Model m) {
+        AppUser user = appUserRepo.getById(id);
+        return user;
+    }
+    //get All users by id of user
 
     @Override
     public List<AppUser> getALLUsers(Model model) {
-        return null;
+
+        return appUserRepo.findAll();
     }
 
     @Override
@@ -80,11 +100,13 @@ public class ServiceImp implements Services {
                 e.printStackTrace();
             }
         }
-        Type quote = new TypeToken<ArrayList<Movie>>() {
+        Type data = new TypeToken<ArrayList<Movie>>() {
         }.getType();
         // it will convert Json type format to Gson type  object
-        List<Movie> result = new Gson().fromJson(message, quote);
-        SaveMovieApi(result);
+
+        List<Movie> result = new Gson().fromJson(message, data);
+        SaveMovie(result);
+
         return result;
     }
 
@@ -101,13 +123,15 @@ public class ServiceImp implements Services {
     private void SaveMovieApi(List<Movie> movies) {
         List<Movie> movies1 = movieRepo.findAll();
         if (movies1.size() < 100) {
-         movieRepo.saveAll(movies);
+            movieRepo.saveAll(movies);
         }
 
 
     }
 
-
-
+    @Override
+    public List<Movie> getTrending() {
+        return movieRepo.getTrending();
     }
+}
 
