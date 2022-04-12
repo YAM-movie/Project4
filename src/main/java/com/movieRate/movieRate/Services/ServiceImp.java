@@ -119,4 +119,8 @@ public class ServiceImp implements Services {
 
 
     }
+    @Override
+    public List<Movie> getTrending() {
+        return movieRepo.getTrending();
+    }
 }

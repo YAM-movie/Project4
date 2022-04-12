@@ -17,6 +17,6 @@ public interface Services {
     List<Movie> getAPi();
     void saveMovie(Movie movie ,Model model);
     AppUser getUserReviews(Long id, Model m);
-
+    List<Movie> getTrending();
 
 }
