@@ -12,10 +12,10 @@ public interface MovieRepo extends JpaRepository<Movie, Long> {
     @Query("SELECT u FROM Movie u WHERE u.id > 440")
     List<Movie> getTrending();
 
-    //if n=1
+
     //get from 1 to 20
-    @Query("SELECT u FROM Movie u WHERE u.id < ?1")
-    List<Movie> getpage(int n);
+    @Query("SELECT u FROM Movie u WHERE u.id >= ?1 AND u.id<=?2")
+    List<Movie> getPage(Long currentPage,Long stopPage);
 
 
     @Query("SELECT u FROM Movie u WHERE u.rate > ?1")

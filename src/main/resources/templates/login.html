@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welecome To Movie Rate</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script src="./js/uikit.min.js"></script>
+    <link rel="stylesheet" href="./css/uikit.min.css">
+    <link rel="stylesheet" href="cssHelper.css">
+
+
+    <!-- for date picker -->
+
+
+</head>
+
+<body>
+<div>
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
+
+        <div class="uk-navbar-left ">
+            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">MOVIE RATE</a>
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#">Home</a>
+
+                </li>
+                <li><a href="#">TRENDING</a></li>
+                <li><a href="#">Browser Movie</a></li>
+            </ul>
+
+        </div>
+
+
+    </nav>
+</div>
+<hr>
+
+
+<div class="uk-position-center">
+    <div>
+        <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light uk-animation-slide-right bg-crimson"
+             style="border-radius: 10px;">
+            <h3 class="uk-card-title">Login</h3>
+            <form class="uk-form-horizontal uk-margin-large" data-role="validator" method="post"
+                  th:action="@{/login_form}">
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-horizontal-text">User Name</label>
+                    <div class="uk-form-controls">
+                        <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                               placeholder="Enter User Name" th:name="username">
+                        <span class="invalid_feedback">
+                                        incorrect type userName
+                                    </span>
+
+                    </div>
+                </div>
+
+                <div class="uk-margin ">
+                    <label class="uk-form-label" for="form-horizontal-text">Password</label>
+                    <div class="uk-form-controls">
+                        <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
+                               placeholder="Enter Password" data-validate="required" th:name="password">
+
+
+                    </div>
+                </div>
+
+
+                <button class="button primary ani-hover-horizontal" type="submit">Login</button>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

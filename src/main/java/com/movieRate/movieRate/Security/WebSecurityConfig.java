@@ -33,20 +33,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login*").permitAll()
-                .antMatchers("/signup*").permitAll()
+                .antMatchers("/" ,"/movie/2" ,"/js/**", "/css/**","/css**","/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginProcessingUrl("/login_form")
+                .defaultSuccessUrl("/home")
                 .loginPage("/login")
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/")
-                .failureUrl("/login")
+                .failureUrl("/login?err")
                 .and()
                 .logout()
-                .logoutUrl("/preform_logout")
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID");
+
+
     }
 }

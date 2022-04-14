@@ -135,6 +135,11 @@ public class ServiceImp implements Services {
         return movie;
     }
 
+    @Override
+    public List<Movie> getMoviesByRating(double rate, Model m) {
+        return null;
+    }
+
 
 //    @Override
 //    public List<Movie> getMoviesByRating(double rate, Model m) {
@@ -143,25 +148,23 @@ public class ServiceImp implements Services {
 
 
     @Override
-    public boolean Signup(String username, String password) {
-        AppUser user = appUserRepo.findByUsername(username);
-        if (user != null) {
-            String HashPass = BCrypt.hashpw(password, BCrypt.gensalt(12));
-            AppUser NewUser = new AppUser(HashPass, username);
+    public boolean Signup(AppUser user) {
+        AppUser user1=appUserRepo.getByappUserName(user.getAppUserName());
+        System.out.println(user.getAppUserName());
+        if (user1 != null)  return false;
+            String hashPass = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+            AppUser NewUser = new AppUser(user.getAppUserName(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBarth(), hashPass);
             appUserRepo.save(NewUser);
             return true;
-        } else {
-            return false;
-        }
-
     }
 
-
-//    @Override
-//    public List<Movie> getpage(int n,Model m) {
-//        if(n>25) return getpage(n);
-//        return movieRepo.getpage()
-//    }
+    // get Page byNumber
+    @Override
+    public List<Movie> getPage(Long currentPage, Model m) {
+        Long stopPage = currentPage * 20;
+        if (currentPage > 25) return movieRepo.getPage(1L, 20L);
+        return movieRepo.getPage(currentPage * 10, stopPage);
+    }
 
 
 }

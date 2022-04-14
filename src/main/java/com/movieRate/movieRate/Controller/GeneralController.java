@@ -4,13 +4,10 @@ import com.movieRate.movieRate.ModuleWeb.AppUser;
 import com.movieRate.movieRate.ModuleWeb.Movie;
 import com.movieRate.movieRate.Services.ServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class GeneralController {
 
     @GetMapping("/")
     public String HomePage() {
-        serviceImp.getAPi();
+
         return "home";
     }
 
@@ -38,11 +35,11 @@ public class GeneralController {
         return "userdetiles";
     }
 
-    @GetMapping("/movie/{id}")
-    String getMovie(@PathVariable Long id, Model model) {
-        model.addAttribute("movie", serviceImp.getOneMovie(id, model));
-        return "moviepage";
-    }
+//    @RequestMapping(value = "/movie/{id}" ,method = RequestMethod.GET)
+//    String getMovie(@PathVariable Long id, Model model) {
+//        model.addAttribute("movie", serviceImp.getOneMovie(id, model));
+//        return "moviepage";
+//    }
 
     @GetMapping("/movies")
     List<Movie> getAllMovie(Model model) {
@@ -73,7 +70,7 @@ public class GeneralController {
     }
 
 
-    @GetMapping("/movie/{title}")
+    @GetMapping("/movies/movie/{title}")
     String getMoviePage(@PathVariable String title,Model model) {
         model.addAttribute("movie", serviceImp.getMovieByTitle(title,model));
         return "moviepage";
@@ -85,30 +82,32 @@ public class GeneralController {
         return "moviepage";
     }
 
-    @PostMapping("/signup")
-    public String signupUser(@RequestParam String username,
-
-                             @RequestParam String password) {
-        return "login";
-        //Signup
+    @ModelAttribute("AppUser")
+    AppUser user(){
+        return new AppUser();
     }
 
-    @GetMapping("/movie/{n}")
-    String getMoviePage(@PathVariable int n, Model model) {
-        model.addAttribute("movie", serviceImp.getpage(n,model));
+    @PostMapping("/signup")
+    public String signupUser(@ModelAttribute AppUser user) {
+        if (serviceImp.Signup(user))return "redirect:/?secsSignup";
+        return "redirect:/?errorSignup";
+
+    }
+    @GetMapping("/login")
+    String login(){
+        return "login";
+    }
+
+    // getMapping FOR GET nUMBER OF Page
+    @GetMapping("/movie/{currentPage}")
+    String getMoviePage( Model model,@PathVariable Long currentPage) {
+        List<Movie> test =serviceImp.getPage(currentPage,model);
+        System.out.println(test);
+        model.addAttribute("movie", serviceImp.getPage(currentPage,model));
         return "moviepage";
     }
 
-//
-//    @Override
-//    public List<Movie> getpage(int n,Model m) {
-//        if(n>25) return getpage(n);
-//        return movieRepo.getpage()
-//    }
 
-//    public List<Movie> getMoviesbyrating(double rate, Model m) {
-//        return movieRepo.getMoviesByRate(rate);
-//    }
 
 
 

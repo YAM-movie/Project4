@@ -1,16 +1,11 @@
 package com.movieRate.movieRate.ModuleWeb;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+
 @Entity
 public class Movie {
     @Id
@@ -32,5 +27,71 @@ public class Movie {
     @OneToMany(fetch = FetchType.EAGER)
     List<Review> reviews;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    public Timestamp getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(Timestamp release_date) {
+        this.release_date = release_date;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public double getVot_count() {
+        return vot_count;
+    }
+
+    public void setVot_count(double vot_count) {
+        this.vot_count = vot_count;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 }

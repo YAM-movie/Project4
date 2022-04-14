@@ -1,8 +1,7 @@
 package com.movieRate.movieRate.ModuleWeb;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,52 +14,53 @@ import java.util.List;
 
 
 @Entity
-public class AppUser implements UserDetails {
+public class AppUser  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String password;
+    private String appUserName;
     private String firstName;
+
+    public void setAppUserName(String appUserName) {
+        this.appUserName = appUserName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     private String lastName;
     private String Email;
-    private Timestamp DateOfBarth;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private String DateOfBarth;
+    private String password;
+    @CreationTimestamp
+    private Timestamp joinIn;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "appUser")
     private List<Review> reviews;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Movie> favoriteMovies;
 
-    public AppUser(String username, String password) {
-        this.username = password;
-        this.password = password;
-    }
-
-    public AppUser() {
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public String getAppUserName() {
+        return appUserName;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    public AppUser() {
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public AppUser(String username, String firstName, String lastName, String email, String dateOfBarth, String password) {
+        this.appUserName = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        Email = email;
+        DateOfBarth = dateOfBarth;
         this.password = password;
     }
 
@@ -88,12 +88,26 @@ public class AppUser implements UserDetails {
         Email = email;
     }
 
-    public Timestamp getDateOfBarth() {
+    public String getDateOfBarth() {
         return DateOfBarth;
     }
 
-    public void setDateOfBarth(Timestamp dateOfBarth) {
+    public void setDateOfBarth(String dateOfBarth) {
         DateOfBarth = dateOfBarth;
+    }
+
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Timestamp getJoinIn() {
+        return joinIn;
+    }
+
+    public void setJoinIn(Timestamp joinIn) {
+        this.joinIn = joinIn;
     }
 
     public List<Review> getReviews() {
@@ -112,28 +126,5 @@ public class AppUser implements UserDetails {
         this.favoriteMovies = favoriteMovies;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

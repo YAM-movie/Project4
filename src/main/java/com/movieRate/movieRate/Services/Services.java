@@ -18,10 +18,10 @@ public interface Services {
     void saveMovie(Movie movie ,Model model);
     AppUser getUserReviews(Long id, Model m);
     List<Movie> getTrending(Model m);
-    List<Movie> getpage(int n,Model m);
+    List<Movie> getPage(Long currentPage,Model m);
     Movie getMovieByTitle(String title, Model m);
     List<Movie> getMoviesByRating(double rate, Model m) ;
-    boolean Signup(String username, String password);
+    boolean Signup(AppUser user);
 
 
 }
