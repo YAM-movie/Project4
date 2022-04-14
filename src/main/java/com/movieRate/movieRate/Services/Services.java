@@ -22,6 +22,9 @@ public interface Services {
     Movie getMovieByTitle(String title, Model m);
     List<Movie> getMoviesByRating(double rate, Model m) ;
     boolean Signup(AppUser user);
+    List<Movie> mostViewMovie(Model model);
+    List<Movie> topMovie(Model model);
+    List<Movie> newMovie(Model model);
 
 
 }
