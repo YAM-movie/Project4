@@ -7,12 +7,12 @@
     <title>Welecome To Movie Rate</title>
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
     <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
-    <script src="./js/uikit.min.js"></script>
+<!--    <script src="./js/uikit.min.js"></script>-->
     <link rel="stylesheet" href="./css/uikit.min.css">
     <link rel="stylesheet" href="cssHelper.css">
 
 
-    <!-- for date picker -->
+
 
 
 </head>
@@ -42,20 +42,20 @@
 
 <div class="uk-position-center">
     <div>
-        <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light uk-animation-slide-right bg-crimson"
-             style="border-radius: 10px;">
+        <div
+                class="uk-card   uk-card-body uk-light uk-animation-slide-right border bd-crimson border-size-2 border-radius-4 border-ridge">
             <h3 class="uk-card-title">Login</h3>
-            <form class="uk-form-horizontal uk-margin-large" data-role="validator" method="post"
+            <hr>
+            <form class="uk-form-horizontal uk-margin-large"   method="post"
                   th:action="@{/login_form}">
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-horizontal-text">User Name</label>
                     <div class="uk-form-controls">
                         <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
-                               placeholder="Enter User Name" th:name="username">
-                        <span class="invalid_feedback">
-                                        incorrect type userName
-                                    </span>
+                               placeholder="Enter User Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$"
+                               th:name="username">
+
 
                     </div>
                 </div>
@@ -66,12 +66,13 @@
                         <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
                                placeholder="Enter Password" data-validate="required" th:name="password">
 
-
                     </div>
                 </div>
 
 
-                <button class="button primary ani-hover-horizontal" type="submit">Login</button>
+
+
+                <button class="uk-button uk-button-secondary ani-hover-horizontal" type="submit">Login</button>
 
             </form>
         </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <script src="./js/uikit.min.js"></script>
     <link rel="stylesheet" href="./css/uikit.min.css">
     <link rel="stylesheet" href="cssHelper.css">
-    <script src="uikit/dist/js/uikit-icons.min.js"></script>
+
 
     <!-- for date picker -->
 
@@ -19,8 +19,9 @@
 </head>
 
 <body>
+<!-- // navbar -->
 <div>
-    <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar >
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
 
         <div class="uk-navbar-left ">
             <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">MOVIE RATE</a>
@@ -35,16 +36,31 @@
 
         </div>
 
-        <div class="uk-navbar-right">
+        <div class="uk-navbar-right" sec:authorize="!isAuthenticated()">
 
             <ul class="uk-navbar-nav">
-                <a class="uk-button uk-button-default" href="/login" uk-toggle style="margin: 10PX;  color:white ;">lOGIN</a>
+                <a class="uk-button uk-button-default" href="/login" uk-toggle
+                   style="margin: 10PX;  color:white ;">lOGIN</a>
 
-                <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle style="margin: 10PX; color: white;">SIGN uP</a>
+                <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
+                   style="margin: 10PX; color: white;">SIGN uP</a>
             </ul>
 
         </div>
-
+        <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#"  sec:authentication="name">username</a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a href="#">My profile</a></li>
+                            <li class="uk-nav-header"></li>
+                            <li><a href="/logout">LogOut</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
 </div>
 <hr>

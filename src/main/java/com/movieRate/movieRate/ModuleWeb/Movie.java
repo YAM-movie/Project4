@@ -1,8 +1,14 @@
 package com.movieRate.movieRate.ModuleWeb;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 
@@ -20,12 +26,16 @@ public class Movie {
     @Column(length = 1000)
     private String overview;
     private String imgurl;
-    private Timestamp release_date;
+    private String release_date;
     private double rate;
     private String lang;
     private double vot_count;
     @OneToMany(fetch = FetchType.EAGER)
     List<Review> reviews;
+
+
+
+
 
     public Long getId() {
         return id;
@@ -59,13 +69,6 @@ public class Movie {
         this.imgurl = imgurl;
     }
 
-    public Timestamp getRelease_date() {
-        return release_date;
-    }
-
-    public void setRelease_date(Timestamp release_date) {
-        this.release_date = release_date;
-    }
 
     public double getRate() {
         return rate;
@@ -93,5 +96,13 @@ public class Movie {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
     }
 }

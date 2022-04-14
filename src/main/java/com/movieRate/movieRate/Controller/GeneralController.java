@@ -20,7 +20,7 @@ public class GeneralController {
 
     @GetMapping("/")
     public String HomePage() {
-
+    serviceImp.getAPi();
         return "home";
     }
 

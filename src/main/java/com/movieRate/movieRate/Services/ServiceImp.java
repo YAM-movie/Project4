@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceImp implements Services {
@@ -90,13 +91,13 @@ public class ServiceImp implements Services {
         File file = new File("Api.json");
         BufferedReader bufferedReader;
         String line;
-        String message = new String();
+        StringBuilder JSONString = new StringBuilder();
         {
             try {
                 bufferedReader = new BufferedReader(new FileReader(file));
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    message += line;
+                    JSONString = JSONString.append(line);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -104,9 +105,14 @@ public class ServiceImp implements Services {
         }
         Type data = new TypeToken<ArrayList<Movie>>() {
         }.getType();
+
         // it will convert Json type format to Gson type  object
-        List<Movie> result = new Gson().fromJson(message, data);
-        SaveMovie(result);
+        List<Movie> result = new Gson().fromJson(JSONString.toString().trim(), data);
+//        result.stream().map(movie -> movie.getRelease_date().replace(movie.getRelease_date())
+//        System.out.println(result.get(0));
+//        SaveMovie(result);
+//        System.out.println(result);
+//        test dfsdfsfsfsdf
         return result;
     }
 
@@ -141,10 +147,6 @@ public class ServiceImp implements Services {
     }
 
 
-//    @Override
-//    public List<Movie> getMoviesByRating(double rate, Model m) {
-//        return movieRepo.getMoviesByRate(rate);
-//    }
 
 
     @Override
@@ -156,6 +158,21 @@ public class ServiceImp implements Services {
             AppUser NewUser = new AppUser(user.getAppUserName(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBarth(), hashPass);
             appUserRepo.save(NewUser);
             return true;
+    }
+
+    @Override
+    public List<Movie> mostViewMovie(Model model) {
+        return null;
+    }
+
+    @Override
+    public List<Movie> topMovie(Model model) {
+        return null;
+    }
+
+    @Override
+    public List<Movie> newMovie(Model model) {
+        return null;
     }
 
     // get Page byNumber
