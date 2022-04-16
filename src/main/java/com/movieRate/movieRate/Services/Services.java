@@ -3,6 +3,7 @@ package com.movieRate.movieRate.Services;
 import com.movieRate.movieRate.ModuleWeb.AppUser;
 import com.movieRate.movieRate.ModuleWeb.Movie;
 import com.movieRate.movieRate.ModuleWeb.Review;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public interface Services {
     List<Movie> mostViewMovie(Model model);
     List<Movie> topMovie(Model model);
     List<Movie> newMovie(Model model);
-
-
+    AppUser getUserDetailsPage(String username,Model model);
+    void saveAuthenticationUser(Model model, Authentication authentication);
+    Boolean saveUserInfo(AppUser user);
 }

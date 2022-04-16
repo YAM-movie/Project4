@@ -5,6 +5,7 @@ import com.movieRate.movieRate.ModuleWeb.Movie;
 import com.movieRate.movieRate.Services.ServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,12 @@ public class GeneralController {
     ServiceImp serviceImp;
 
     @GetMapping("/")
-    public String HomePage() {
-    serviceImp.getAPi();
+    public String HomePage(Model model, Authentication authentication) {
+        serviceImp.mostViewMovie(model);
+        serviceImp.topMovie(model);
+        serviceImp.newMovie(model);
+        if (authentication!=null) serviceImp.saveAuthenticationUser(model,authentication);
+        serviceImp.getAPi();
         return "home";
     }
 
@@ -29,17 +34,6 @@ public class GeneralController {
         return "moviepage";
     }
 
-    @GetMapping("/userdetails")
-    public String UserDetailspagePage(@PathVariable Long id, Model model) {
-        serviceImp.getUser(id, model);
-        return "userdetiles";
-    }
-
-//    @RequestMapping(value = "/movie/{id}" ,method = RequestMethod.GET)
-//    String getMovie(@PathVariable Long id, Model model) {
-//        model.addAttribute("movie", serviceImp.getOneMovie(id, model));
-//        return "moviepage";
-//    }
 
     @GetMapping("/movies")
     List<Movie> getAllMovie(Model model) {
@@ -71,44 +65,56 @@ public class GeneralController {
 
 
     @GetMapping("/movies/movie/{title}")
-    String getMoviePage(@PathVariable String title,Model model) {
-        model.addAttribute("movie", serviceImp.getMovieByTitle(title,model));
+    String getMoviePage(@PathVariable String title, Model model) {
+        model.addAttribute("movie", serviceImp.getMovieByTitle(title, model));
         return "moviepage";
     }
 
     @GetMapping("/movierate")
     String getMoviePage(double rate, Model model) {
-        model.addAttribute("movie", serviceImp.getMoviesByRating(rate,model));
+        model.addAttribute("movie", serviceImp.getMoviesByRating(rate, model));
         return "moviepage";
     }
 
     @ModelAttribute("AppUser")
-    AppUser user(){
+    AppUser user() {
         return new AppUser();
     }
 
     @PostMapping("/signup")
     public String signupUser(@ModelAttribute AppUser user) {
-        if (serviceImp.Signup(user))return "redirect:/?secsSignup";
+        if (serviceImp.Signup(user)) return "redirect:/?secsSignup";
         return "redirect:/?errorSignup";
 
     }
+
     @GetMapping("/login")
-    String login(){
+    String login() {
         return "login";
     }
 
     // getMapping FOR GET nUMBER OF Page
     @GetMapping("/movie/{currentPage}")
-    String getMoviePage( Model model,@PathVariable Long currentPage) {
-        List<Movie> test =serviceImp.getPage(currentPage,model);
+    String getMoviePage(Model model, @PathVariable Long currentPage) {
+        List<Movie> test = serviceImp.getPage(currentPage, model);
         System.out.println(test);
-        model.addAttribute("movie", serviceImp.getPage(currentPage,model));
+        model.addAttribute("movie", serviceImp.getPage(currentPage, model));
         return "moviepage";
     }
 
+    @GetMapping("/user_Details/{username}")
+    public String UserDetailsPage(@PathVariable String username, Model model, Authentication authentication) {
+        serviceImp.getUserDetailsPage(username, model);
+        serviceImp.saveAuthenticationUser(model, authentication);
+        return "userDetails";
+    }
 
-
+    /// save edit Information about user
+    @PostMapping("/user/edite")
+    String saveUserInfo(@ModelAttribute AppUser user){
+        if (serviceImp.saveUserInfo(user))return "/user_Details/" +user.getAppUserName();
+        return "/user_Details/" +user.getAppUserName() +"?err";
+    }
 
 
 }

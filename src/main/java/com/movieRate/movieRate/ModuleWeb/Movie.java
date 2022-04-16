@@ -1,14 +1,7 @@
 package com.movieRate.movieRate.ModuleWeb;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 
@@ -32,8 +25,6 @@ public class Movie {
     private double vot_count;
     @OneToMany(fetch = FetchType.EAGER)
     List<Review> reviews;
-
-
 
 
 

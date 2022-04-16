@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:security="">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welecome To Movie Rate</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css" />
+    <script src="/js/userjs.js"></script>
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <link rel="stylesheet" href="/css/uikit.min.css" >
+    <link rel="stylesheet" href="/cssHelper.css" />
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="uikit/dist/js/uikit-icons.min.js"></script>
+
+
+    <title>UserDetails</title>
+</head>
+
+<body>
+<!-- // navbar -->
+<div>
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
+
+        <div class="uk-navbar-left ">
+            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">MOVIE RATE</a>
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="/">Home</a>
+
+                </li>
+                <li><a href="/trending">TRENDING</a></li>
+                <li><a href="/movies">Browser Movie</a></li>
+            </ul>
+
+        </div>
+
+        <div class="uk-navbar-right" sec:authorize="!isAuthenticated()">
+
+            <ul class="uk-navbar-nav">
+                <a class="uk-button uk-button-default" href="/login" uk-toggle
+                   style="margin: 10PX;  color:white ;">lOGIN</a>
+
+                <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
+                   style="margin: 10PX; color: white;">SIGN uP</a>
+            </ul>
+
+        </div>
+        <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#"  sec:authentication="name">username</a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
+                            <li class="uk-nav-header"></li>
+                            <li><a href="/logout">LogOut</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="uk-alert-danger" uk-alert th:if="${param.err}">
+    <a class="uk-alert-close" uk-close></a>
+    <p>Password in wrong please try again.</p>
+</div>
+<div class="">
+    <div class="uk-margin">
+        <div>
+            <div
+                    class="uk-card   uk-card-body uk-light uk-animation-slide-right border bd-crimson border-size-2 border-radius-4 border-ridge">
+                <h3 class="uk-card-title">Your information</h3>
+                <hr>
+                <form class="uk-form-horizontal uk-margin-large" data-role="validator" action="javascript:"
+                      method="post" th:action="@{/user/edite}" th:method="post"  th:object="${AppUser}">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">User Name</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                                   placeholder="Enter User Name"
+                                   data-validate="required pattern=^[a-zA-Z0-9_.-]*$ minlength=6"
+                                   th:value="${userDetailInfo.appUserName}" id="userDis" disabled>
+                            <span class="invalid_feedback">
+                                You can use only text and number and ( _ ) sign and minimum length=6
+                            </span>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">First Name</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                                   placeholder="Enter First Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$ "
+                                   th:value="${userDetailInfo.firstName}" disabled id="firstDis" th:field="*{firstName}">
+                            <span class="invalid_feedback">
+                                You can use only text and number and ( _ ) sign
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">Last Name</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                                   placeholder="Enter Last Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$"
+                                   th:value="${userDetailInfo.lastName}" disabled id="lastDis" th:field="*{lastName}">
+                            <span class="invalid_feedback">
+                                You can use only text and number and ( _ ) sign
+                            </span>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">Birthday</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="calendarpicker" value="1998/12/21"
+                                   data-prepend="<span class='mif-calendar'></span>"
+                                   th:value="${userDetailInfo.DateOfBarth}" disabled id="birthlDis" th:field="*{DateOfBarth}">
+
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">Email</label>
+                        <div class="uk-form-controls">
+                            <input type="text" class="disabled" data-role="input"
+                                   data-prepend="<span class='mif-mail'></span>" placeholder="Enter Your Email"
+                                   data-validate="email" th:value="${userDetailInfo.Email}" disabled id="emailDis" th:field="*{Email}">
+                            <span class="invalid_feedback">
+                                You Must Submit Email form
+                            </span>
+                        </div>
+                    </div>
+                    <div class="uk-margin" id="joinDis">
+                        <label class="uk-form-label" for="form-horizontal-text">joinIn</label>
+                        <div class="uk-form-controls">
+                            <p th:text="${userDetailInfo.joinIn}">14/9/2024</p>
+                        </div>
+                    </div>
+
+
+                    <div class="uk-margin " hidden="true" id="passDiv">
+                        <label class="uk-form-label" for="form-horizontal-text">Password</label>
+                        <div class="uk-form-controls">
+                            <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
+                                   data-validate="required minlength=8" placeholder="Enter Password" th:field="*{password}">
+                            <span class="invalid_feedback">
+                                required minimum length=8
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="uk-margin " hidden="true" id="rePassDiv">
+                        <label class="uk-form-label" for="form-horizontal-text">Retype password</label>
+                        <div class="uk-form-controls">
+                            <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
+                                   data-validate="required compare=password" placeholder="Enter Password">
+                            <span class="invalid_feedback">
+                                The Password must match
+                            </span>
+
+                        </div>
+                    </div>
+
+
+
+                    <button class="uk-button uk-button-default" onclick="displayDate()" id="EditDisappered"
+                            type="button">Edit
+                    </button>
+                    <a class="uk-button uk-button-danger"  hidden="true" id="cancel"
+                       type="button" th:href="'/user_Details/'+${userDetailInfo.appUserName}">Cancel
+                    </a>
+                    <button class="uk-button uk-button-primary" type="submit" hidden="true" id="saveAppear">
+                        Save
+                    </button>
+
+
+
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="d-flex flex-justify-center">
+    <marquee>
+        <h1 style="color: white;" class="text-bold"><span class="mif-copyright mif-1x fg-red"></span> This App made
+            by
+            ASAC STUDENT</h1>
+    </marquee>
+</div>
+</div>
+</body>
+
+</html>
