@@ -112,8 +112,9 @@ public class GeneralController {
     /// save edit Information about user
     @PostMapping("/user/edite")
     String saveUserInfo(@ModelAttribute AppUser user){
-        if (serviceImp.saveUserInfo(user))return "/user_Details/" +user.getAppUserName();
-        return "/user_Details/" +user.getAppUserName() +"?err";
+        System.out.println("--------"+user.getAppUserName());
+        if (serviceImp.saveUserInfo(user))return "redirect:/user_Details/" +user.getAppUserName();
+        return "redirect:/user_Details/" +user.getAppUserName() +"?err";
     }
 
 

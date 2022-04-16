@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:security="">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" >
 
 <head>
     <meta charset="UTF-8" />
@@ -78,15 +78,16 @@
                 <h3 class="uk-card-title">Your information</h3>
                 <hr>
                 <form class="uk-form-horizontal uk-margin-large" data-role="validator" action="javascript:"
-                      method="post" th:action="@{/user/edite}" th:method="post"  th:object="${AppUser}">
+                      method="post" th:action="@{/user/edite}" th:method="post"  >
 
                     <div class="uk-margin">
+                        <input name="appUserName" th:value="${userDetailInfo.appUserName}" hidden="true">
                         <label class="uk-form-label" for="form-horizontal-text">User Name</label>
                         <div class="uk-form-controls">
                             <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
                                    placeholder="Enter User Name"
                                    data-validate="required pattern=^[a-zA-Z0-9_.-]*$ minlength=6"
-                                   th:value="${userDetailInfo.appUserName}" id="userDis" disabled>
+                                   th:data-default-value="${userDetailInfo.appUserName}" id="userDis" disabled  name="appUserName">
                             <span class="invalid_feedback">
                                 You can use only text and number and ( _ ) sign and minimum length=6
                             </span>
@@ -97,7 +98,7 @@
                         <div class="uk-form-controls">
                             <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
                                    placeholder="Enter First Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$ "
-                                   th:value="${userDetailInfo.firstName}" disabled id="firstDis" th:field="*{firstName}">
+                                   th:data-default-value="${userDetailInfo.firstName}" disabled id="firstDis"  name="firstName">
                             <span class="invalid_feedback">
                                 You can use only text and number and ( _ ) sign
                             </span>
@@ -109,7 +110,7 @@
                         <div class="uk-form-controls">
                             <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
                                    placeholder="Enter Last Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$"
-                                   th:value="${userDetailInfo.lastName}" disabled id="lastDis" th:field="*{lastName}">
+                                   th:data-default-value="${userDetailInfo.lastName}" disabled id="lastDis"  name="lastName">
                             <span class="invalid_feedback">
                                 You can use only text and number and ( _ ) sign
                             </span>
@@ -120,7 +121,7 @@
                         <div class="uk-form-controls">
                             <input type="text" data-role="calendarpicker" value="1998/12/21"
                                    data-prepend="<span class='mif-calendar'></span>"
-                                   th:value="${userDetailInfo.DateOfBarth}" disabled id="birthlDis" th:field="*{DateOfBarth}">
+                                   th:data-default-value="${userDetailInfo.DateOfBarth}" disabled id="birthlDis"  name="DateOfBarth">
 
                         </div>
                     </div>
@@ -129,7 +130,7 @@
                         <div class="uk-form-controls">
                             <input type="text" class="disabled" data-role="input"
                                    data-prepend="<span class='mif-mail'></span>" placeholder="Enter Your Email"
-                                   data-validate="email" th:value="${userDetailInfo.Email}" disabled id="emailDis" th:field="*{Email}">
+                                   data-validate="email" th:data-default-value="${userDetailInfo.Email}" disabled id="emailDis"  name="Email">
                             <span class="invalid_feedback">
                                 You Must Submit Email form
                             </span>
@@ -147,7 +148,7 @@
                         <label class="uk-form-label" for="form-horizontal-text">Password</label>
                         <div class="uk-form-controls">
                             <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
-                                   data-validate="required minlength=8" placeholder="Enter Password" th:field="*{password}">
+                                   data-validate="required minlength=8" placeholder="Enter Password"  name="password">
                             <span class="invalid_feedback">
                                 required minimum length=8
                             </span>
