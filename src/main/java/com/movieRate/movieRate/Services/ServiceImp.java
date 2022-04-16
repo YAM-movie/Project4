@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -36,8 +37,8 @@ public class ServiceImp implements Services {
 
     @Autowired
     private ReviewRepo reviewRepo;
-
-    BCryptPasswordEncoder hashPassword;
+    @Autowired
+    PasswordEncoder hashPassword;
 
     //get Movie by Movie id
     @Override
@@ -196,7 +197,8 @@ public class ServiceImp implements Services {
     @Transactional
     @Override
     public Boolean saveUserInfo(AppUser user) {
-        AppUser userAfterEdite = appUserRepo.getById(user.getId());
+        System.out.println(user);
+        AppUser userAfterEdite = appUserRepo.getByappUserName(user.getAppUserName());
         if (hashPassword.matches(user.getPassword(), userAfterEdite.getPassword())) {
             userAfterEdite.setFirstName(user.getFirstName());
             userAfterEdite.setLastName(user.getLastName());
