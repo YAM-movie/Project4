@@ -27,11 +27,11 @@
             <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">MOVIE RATE</a>
             <ul class="uk-navbar-nav">
                 <li>
-                    <a href="#">Home</a>
+                    <a href="/">Home</a>
 
                 </li>
-                <li><a href="#">TRENDING</a></li>
-                <li><a href="#">Browser Movie</a></li>
+                <li><a href="/trending">TRENDING</a></li>
+                <li><a href="/movies">Browser Movie</a></li>
             </ul>
 
         </div>
@@ -53,7 +53,7 @@
                     <a href="#"  sec:authentication="name">username</a>
                     <div class="uk-navbar-dropdown">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <li><a href="#">My profile</a></li>
+                            <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
                             <li class="uk-nav-header"></li>
                             <li><a href="/logout">LogOut</a></li>
                         </ul>
@@ -66,22 +66,19 @@
 <hr>
 
 
-<div class="uk-container uk-container-expand">
+<div class="uk-container uk-container-expand border-radius-4 ">
     <div data-role="carousel" data-cls-controls="fg-white" data-effect="fade" data-controls="false"
-         data-bullets="false" data-height="400px" data-duration="500" data-auto-start="true"
-         style="margin-top: 20px;">
-        <div class="slide"
-             data-cover="https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/12/BEST-MOVIES-ON-NETFLIX.jpg"
-             data-period="5000"></div>
-        <div class="slide"
-             data-cover="https://static1.colliderimages.com/wordpress/wp-content/uploads/2022/03/best-sci-fi-movies-netflix.jpg"
-             data-period="3000"></div>
-        <div class="slide"
-             data-cover="https://static1.colliderimages.com/wordpress/wp-content/uploads/2022/02/best-2000s-movies-netflix.png"
-             data-period="3000"></div>
-        <div class="slide"
-             data-cover="https://www.bollyinside.com/articles/wp-content/uploads/sites/4/2022/03/Best-Movies-on-Netflix-629x350.jpg"
-             data-period="3000"></div>
+         data-bullets="false" data-height="550px" data-duration="500" data-auto-start="true" data-width="1200px"
+          class="pos-top-center" >
+            <div th:each="movie:${newMovie}" class="">
+                <div class="slide"
+                     data-period="3000" >
+                    <img th:src="${movie.imgurl}" style="height: 600px;width: 100%;" class="border-radius-4">
+                </div>
+            </div>
+
+
+
     </div>
 </div>
 <hr>
@@ -96,141 +93,32 @@
 </div>
 
 <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
-
     <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
-        <li>
+
+        <li th:each="movieM:${mostViewMovie}">
             <div class="uk-panel">
                 <div class="card  " style="border-radius: 5px;">
 
                     <div class="card-content p-2 "
                          style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
+                        <a class="text-bold" th:text="${movieM.title}"
                            style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
                             man</a>
 
                     </div>
                     <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
+                        <img th:src="${movieM.imgurl}"style="width: 100%">
                     </div>
 
                 </div>
             </div>
         </li>
-        <li>
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
 
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
 
-                    </div>
-                    <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
-                    </div>
 
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
 
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
 
-                    </div>
-                    <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
-                    </div>
 
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
-
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
-
-                    </div>
-                    <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
-                    </div>
-
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
-
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
-
-                    </div>
-                    <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
-                    </div>
-
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
-
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
-
-                    </div>
-                    <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
-                    </div>
-
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
-
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
-
-                    </div>
-                    <div class="card-content">
-                        <img src="https://www.fillmurray.com/g/200/300
-                 " style="width: 100%">
-                    </div>
-
-                </div>
-            </div>
-        </li>
 
     </ul>
 
@@ -257,134 +145,19 @@
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
 
         <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
-            <li>
+            <li th:each="movieT:${topMovie}">
                 <div class="uk-panel">
                     <div class="card  " style="border-radius: 5px;">
 
                         <div class="card-content p-2 "
                              style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
+                            <a class="text-bold" th:text="${movieT.title}"
                                style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
                                 man</a>
 
                         </div>
                         <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
+                            <img th:src="${movieT.imgurl}"style="width: 100%">
                         </div>
 
                     </div>
@@ -414,134 +187,19 @@
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
 
         <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
-            <li>
+            <li th:each="movieN:${newMovie}">
                 <div class="uk-panel">
                     <div class="card  " style="border-radius: 5px;">
 
                         <div class="card-content p-2 "
                              style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
+                            <a class="text-bold" th:text="${movieN.title}"
                                style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
                                 man</a>
 
                         </div>
                         <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
-                        </div>
-                        <div class="card-content">
-                            <img src="https://www.fillmurray.com/g/200/300
-                       " style="width: 100%">
+                            <img th:src="${movieN.imgurl}"style="width: 100%">
                         </div>
 
                     </div>
@@ -681,46 +339,7 @@
         </script>
 </div>
 
-<!-- login model -->
-<div id="modal-Login" class=" uk-flex-top " uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-width-xlarge">
 
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-        <form class="uk-form-horizontal uk-margin-large" data-role="validator" action="javascript:" method="post" th:action="@{/login}">
-
-            <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">User Name</label>
-                <div class="uk-form-controls">
-                    <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
-                           placeholder="Enter User Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$" name="username">
-                    <span class="invalid_feedback">
-                            incorrect type userName
-                        </span>
-
-                </div>
-            </div>
-
-            <div class="uk-margin ">
-                <label class="uk-form-label" for="form-horizontal-text">Password</label>
-                <div class="uk-form-controls">
-                    <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
-                           placeholder="Enter Password" data-validate="required" name="password">
-
-
-                </div>
-            </div>
-
-
-            <div class="uk-modal-footer uk-margin">
-
-                <button class="button primary">Login</button>
-            </div>
-        </form>
-    </div>
-
-
-
-</div>
 
 
 
