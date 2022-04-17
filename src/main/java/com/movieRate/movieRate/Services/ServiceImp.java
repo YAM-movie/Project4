@@ -174,9 +174,10 @@ public class ServiceImp implements Services {
 
     // get Page byNumber
     @Override
-    public List<Movie> getPage(Long currentPage, Model m) {
+    public List<Movie> getPage(Long currentPage, Model model) {
         Long stopPage = currentPage * 20;
         if (currentPage > 25) return movieRepo.getPage(1L, 20L);
+        model.addAttribute("movies", movieRepo.getPage(currentPage * 10, stopPage));
         return movieRepo.getPage(currentPage * 10, stopPage);
     }
 
@@ -208,6 +209,17 @@ public class ServiceImp implements Services {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int MoviesPage(Model model) {
+       if (model.containsAttribute("moviesPage")){
+           int page= (int) model.getAttribute("moviesPage");
+           model.addAttribute("moviesPage",page+1);
+           return page+1;
+       }
+        model.addAttribute("moviesPage",1);
+        return 1;
     }
 
 }

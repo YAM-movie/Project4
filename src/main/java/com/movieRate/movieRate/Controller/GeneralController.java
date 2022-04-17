@@ -70,11 +70,7 @@ public class GeneralController {
         return "moviepage";
     }
 
-    @GetMapping("/movierate")
-    String getMoviePage(double rate, Model model) {
-        model.addAttribute("movie", serviceImp.getMoviesByRating(rate, model));
-        return "moviepage";
-    }
+
 
     @ModelAttribute("AppUser")
     AppUser user() {
@@ -94,12 +90,13 @@ public class GeneralController {
     }
 
     // getMapping FOR GET nUMBER OF Page
-    @GetMapping("/movie/{currentPage}")
-    String getMoviePage(Model model, @PathVariable Long currentPage) {
+    @GetMapping("/movies/page/{currentPage}")
+    String getMoviePage(Model model, @PathVariable Long currentPage ,Authentication authentication) {
         List<Movie> test = serviceImp.getPage(currentPage, model);
-        System.out.println(test);
-        model.addAttribute("movie", serviceImp.getPage(currentPage, model));
-        return "moviepage";
+        serviceImp.saveAuthenticationUser(model, authentication);
+        serviceImp.getPage(currentPage, model);
+
+        return "AllMoviePage";
     }
 
     @GetMapping("/user_Details/{username}")
@@ -112,9 +109,12 @@ public class GeneralController {
     /// save edit Information about user
     @PostMapping("/user/edite")
     String saveUserInfo(@ModelAttribute AppUser user){
-        System.out.println("--------"+user.getAppUserName());
         if (serviceImp.saveUserInfo(user))return "redirect:/user_Details/" +user.getAppUserName();
         return "redirect:/user_Details/" +user.getAppUserName() +"?err";
+    }
+    @GetMapping("/All_movies")
+    String allMovies(Model model){
+        return "redirect:/movies/page/" + serviceImp.MoviesPage(model);
     }
 
 
