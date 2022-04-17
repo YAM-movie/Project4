@@ -31,7 +31,7 @@
 
                 </li>
                 <li><a href="/trending">TRENDING</a></li>
-                <li><a href="/movies">Browser Movie</a></li>
+                <li><a href="/All_movies">Browser Movie</a></li>
             </ul>
 
         </div>
@@ -50,7 +50,7 @@
         <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
             <ul class="uk-navbar-nav">
                 <li>
-                    <a href="#"  sec:authentication="name">username</a>
+                    <a href="#" sec:authentication="name">username</a>
                     <div class="uk-navbar-dropdown">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
                             <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
@@ -69,14 +69,13 @@
 <div class="uk-container uk-container-expand border-radius-4 ">
     <div data-role="carousel" data-cls-controls="fg-white" data-effect="fade" data-controls="false"
          data-bullets="false" data-height="550px" data-duration="500" data-auto-start="true" data-width="1200px"
-          class="pos-top-center" >
-            <div th:each="movie:${newMovie}" class="">
-                <div class="slide"
-                     data-period="3000" >
-                    <img th:src="${movie.imgurl}" style="height: 600px;width: 100%;" class="border-radius-4">
-                </div>
+         class="pos-top-center">
+        <div th:each="movie:${newMovie}" class="">
+            <div class="slide"
+                 data-period="3000">
+                <img th:src="${movie.imgurl}" style="height: 600px;width: 100%;" class="border-radius-4">
             </div>
-
+        </div>
 
 
     </div>
@@ -93,40 +92,36 @@
 </div>
 
 <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
-    <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
+    <div uk-slideshow="autoplay: true autoplay-interval: 5000">
+        <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
 
-        <li th:each="movieM:${mostViewMovie}">
-            <div class="uk-panel">
-                <div class="card  " style="border-radius: 5px;">
+            <li th:each="movieM:${mostViewMovie}">
+                <div class="uk-panel">
+                    <div class="card  " style="border-radius: 5px;">
 
-                    <div class="card-content p-2 "
-                         style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                        <a class="text-bold" th:text="${movieM.title}"
-                           style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                            man</a>
+                        <div class="card-content p-2 "
+                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
+                            <a class="text-bold" th:text="${movieM.title}"
+                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
+                                man</a>
+
+                        </div>
+                        <div class="card-content">
+                            <img th:src="${movieM.imgurl}" style="width: 100%">
+                        </div>
 
                     </div>
-                    <div class="card-content">
-                        <img th:src="${movieM.imgurl}"style="width: 100%">
-                    </div>
-
                 </div>
-            </div>
-        </li>
+            </li>
 
 
+        </ul>
 
-
-
-
-
-    </ul>
-
-    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
-       uk-slider-item="previous"></a>
-    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-       uk-slider-item="next"></a>
-
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+           uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+           uk-slider-item="next"></a>
+    </div>
 </div>
 <hr>
 
@@ -143,34 +138,34 @@
 
 <div>
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+        <div uk-slideshow="autoplay: true autoplay-interval: 5000">
+            <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
+                <li th:each="movieT:${topMovie}">
+                    <div class="uk-panel">
+                        <div class="card  " style="border-radius: 5px;">
 
-        <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
-            <li th:each="movieT:${topMovie}">
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
+                            <div class="card-content p-2 "
+                                 style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
+                                <a class="text-bold" th:text="${movieT.title}"
+                                   style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
+                                    man</a>
 
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold" th:text="${movieT.title}"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
+                            </div>
+                            <div class="card-content">
+                                <img th:src="${movieT.imgurl}" style="width: 100%">
+                            </div>
 
                         </div>
-                        <div class="card-content">
-                            <img th:src="${movieT.imgurl}"style="width: 100%">
-                        </div>
-
                     </div>
-                </div>
-            </li>
+                </li>
 
-        </ul>
+            </ul>
 
-        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
-           uk-slider-item="previous"></a>
-        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-           uk-slider-item="next"></a>
-
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+               uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+               uk-slider-item="next"></a>
+        </div>
     </div>
 </div>
 <hr>
@@ -185,33 +180,35 @@
 
     </div>
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+        <div uk-slideshow="autoplay: true autoplay-interval: 5000">
+            <ul class="uk-slider-items  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
+                <li th:each="movieN:${newMovie}">
+                    <div class="uk-panel">
+                        <div class="card  " style="border-radius: 5px;">
 
-        <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
-            <li th:each="movieN:${newMovie}">
-                <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
 
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold" th:text="${movieN.title}"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
+                            <div class="card-content">
+                                <img th:src="${movieN.imgurl}" style="height=100%">
+                            </div>
+
 
                         </div>
-                        <div class="card-content">
-                            <img th:src="${movieN.imgurl}"style="width: 100%">
-                        </div>
+
 
                     </div>
-                </div>
-            </li>
+                    <a class="text-bold" th:text="${movieN.title}"
+                    >Spider
+                        man</a>
 
-        </ul>
+                </li>
 
-        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
-           uk-slider-item="previous"></a>
-        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-           uk-slider-item="next"></a>
+            </ul>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+               uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+               uk-slider-item="next"></a>
+
+        </div>
 
     </div>
 </div>
@@ -242,7 +239,8 @@
             <div class="uk-margin">
                 <label class="uk-form-label" for="form-horizontal-text">User name</label>
                 <div class="uk-form-controls">
-                    <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>" placeholder="Enter User Name"
+                    <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                           placeholder="Enter User Name"
                            data-validate="required pattern=^[a-zA-Z0-9_.-]*$ minlength=6"
                            uk-tooltip="title: Example :Mohammed998; delay: 500" th:field="*{appUserName}">
                     <span class="invalid_feedback">
@@ -330,17 +328,18 @@
     <div th:if="${param.errorSignup}">
         <script>
                 UIkit.notification("<span uk-icon='icon: check'></span> UserName used before please try another one", { status: 'danger' }, { pos: 'top-center' });
-            </script>
+
+
+        </script>
     </div>
 </div>
 <div th:if="${param.secsSignup}">
     <script>
             UIkit.notification("<span uk-icon='icon: check'></span> SignUp Succeeded please Login", { status: 'success' }, { pos: 'top-center' });
-        </script>
+
+
+    </script>
 </div>
-
-
-
 
 
 </body>

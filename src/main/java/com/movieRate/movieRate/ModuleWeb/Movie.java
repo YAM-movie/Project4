@@ -23,6 +23,7 @@ public class Movie {
     private double rate;
     private String lang;
     private double vot_count;
+    private String trailer;
     @OneToMany(fetch = FetchType.EAGER)
     List<Review> reviews;
 
@@ -95,5 +96,13 @@ public class Movie {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
     }
 }
