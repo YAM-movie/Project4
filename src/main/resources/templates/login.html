@@ -46,16 +46,21 @@
                 class="uk-card   uk-card-body uk-light uk-animation-slide-right border bd-crimson border-size-2 border-radius-4 border-ridge">
             <h3 class="uk-card-title">Login</h3>
             <hr>
-            <form class="uk-form-horizontal uk-margin-large"   method="post"
-                  th:action="@{/login_form}">
+            <h4 class="text-center" style="color: rgb(245, 14, 14)" th:if="${param.invalidToken}">Invalid token</h4>
+            <h4 class="text-center" style="color: rgb(245, 14, 14)" th:if="${param.err}">Invalid username or Password</h4>
+            <h4 class="text-center" style="color: rgb(11, 194, 11)" th:if="${param.secs}">Password changed</h4>
+            <form class="uk-form-horizontal uk-margin-large md-4" data-role="validator" action="javascript:"
+                  method="post" th:action="@{/login_form}">
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-horizontal-text">User Name</label>
                     <div class="uk-form-controls">
                         <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
                                placeholder="Enter User Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$"
-                               th:name="username">
-
+                               name="username">
+                        <span class="invalid_feedback">
+                        incorrect Type username
+                     </span>
 
                     </div>
                 </div>
@@ -64,16 +69,23 @@
                     <label class="uk-form-label" for="form-horizontal-text">Password</label>
                     <div class="uk-form-controls">
                         <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
-                               placeholder="Enter Password" data-validate="required" th:name="password">
-
+                               placeholder="Enter Password" data-validate="required" name="password">
+                    </div>
+                </div>
+                <div class="uk-margin ">
+                    <label class="uk-form-label" for="form-horizontal-text">Remmeber me</label>
+                    <div class="uk-form-controls">
+                        <input type="checkbox" checked data-role="checkbox" data-style="2" data-caption=""
+                               data-cls-caption="fg-cyan text-bold" data-cls-check="bd-cyan myCheck" name="remember-me">
                     </div>
                 </div>
 
 
+                <div class="text-center">
 
-
-                <button class="uk-button uk-button-secondary ani-hover-horizontal" type="submit">Login</button>
-
+                    <button class="uk-button uk-button-secondary ani-hover-horizontal" type="submit">Login</button>
+                </div>
+                <a href="/forgot-password">Forgot password?</a>
             </form>
         </div>
     </div>
