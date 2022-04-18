@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welecome To Movie Rate</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <link rel="stylesheet" href="/css/uikit.min.css">
+    <link rel="stylesheet" href="/cssHelper.css">
+    <link rel="stylesheet" href="/css/singlemovie.css">
+
+
+    <script>
+        function view(){
+            reviewss=reviews;
+        }
+    </script>
+
+</head>
+
+<body >
+
+<!-- // navbar -->
+<div>
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
+
+        <div class="uk-navbar-left ">
+            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">YAM MOVIES</a>
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="/">Home</a>
+
+                </li>
+                <li><a href="/trending">TRENDING</a></li>
+                <li><a href="/movies/page/1">Browser Movie</a></li>
+            </ul>
+
+        </div>
+
+        <div class="uk-navbar-right" sec:authorize="!isAuthenticated()">
+
+            <ul class="uk-navbar-nav">
+                <a class="uk-button uk-button-default" href="/login" uk-toggle
+                   style="margin: 10PX;  color:white ;">lOGIN</a>
+
+                <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
+                   style="margin: 10PX; color: white;">SIGN uP</a>
+            </ul>
+
+        </div>
+        <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#" sec:authentication="name">username</a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
+                            <li class="uk-nav-header"></li>
+                            <li><a href="/logout">LogOut</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<hr>
+
+<div class="hero mv-single-hero">
+    <div class="container">
+    </div>
+</div>
+<div class="page-single movie-single movie_single">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="movie-img sticky-sb">
+                    <!--image-->
+                    <img th:src="${movie?.imgurl}" alt="">
+                    <div class="movie-btn">
+                        <div><br/></div>
+                        <div class="btn-transform  red">
+                            <div><a href="https://www.youtube.com/embed/o-0hcF97wy0" class=" redbtn"> <i
+                                    class="ion-card"></i> Watch Trailer</a>
+                            </div>
+                            <div><i class="ion-play"></i>
+                            </div>
+                        </div>
+                        <div class="btn-transform red">
+                            <div><a href="#" class=" greenbtn"> <i class="ion-card"></i> ADD TO
+                                FAVORITE</a>
+                            </div>
+                            <div><i class="ion-card"></i></a></div>
+                        </div>
+                        <div class="btn-transform  red">
+                            <div><a href="https://www.youtube.com/embed/o-0hcF97wy0" class=" Violetbtn"> <i
+                                    class="ion-card"></i> Watch Full
+                                Movie</a>
+                            </div>
+                            <div><i class="ion-play"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="movie-single-ct main-content">
+                    <h1 class="bd-hd"><span style="color: aliceblue" th:text="${movie?.title}"></span> <span><span
+                            style="color: aliceblue" th:text="${movie?.release_date}"></span></span></h1>
+
+                    <div class="movie-rate">
+                        <div class="rate">
+                            <i class="ion-android-star"></i>
+                            <!-- rate -->
+                            <p><span th:text="${movie?.rate}"></span> /10<br>
+                                <!-- vote count  -->
+                                <span class="rv"><span th:text="${movie?.vot_count}"></span> Reviews</span>
+                            </p>
+                        </div>
+                        <div class="rate-star">
+                            <p>Rate This Movie: </p>
+                            <input data-role="rating" data-stars="10" th:data-value="${movie?.rate}"
+                                   data-stared-color="#a10900" data-static="true">
+                        </div>
+                    </div>
+                </div>
+                <!-- movie Description -->
+                <div class="Description">
+                    <h2 style="color: aliceblue">Description</h2>
+                    <a style="color: aliceblue"> <h5 style="color: aliceblue;line-height:1.5;margin-top:10px;font-size: 24px;"
+                                                       th:text="${movie?.overview}" ></h5> </a>
+
+                </div>
+                <!--Form-->
+                <form action="/comment" method="POST">
+                    <div class="box">
+                        <div class="col-6">
+                        </div>
+                        <div class="row">
+                            <div class="col-10">
+                                <input name="MovieId" th:value="${movie.id}" hidden="true">
+                                <!--                                <input name="mov" th:value="${movie}" >-->
+                                <input data-role="rating" data-stars="10" data-value="${movie?.rate}"
+                                       data-stared-color="cyan" name="rate" id="rate">
+
+                                <textarea type="text" class="input" name="body" id="body"
+                                          placeholder="Your Comment Here"></textarea>
+                                <button type="submit" value="Submit" style="margin-left: 6cm" class='btn-box'>Add
+                                    Comment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="title-hd-sm">
+                    <h4>reviews and comments</h4>
+
+                    <a  href="#" class="time">View All <i class="ion-ios-arrow-right"></i></a>
+                </div>
+                <!--                <button onclick="view()">button</button>-->
+
+                <div style="color: aliceblue" th:each="review:${reviews}">
+                    <!-- movie user review -->
+                    <div class="mv-user-review-item">
+                        <h3><a
+                                th:href="'/user_Details/'+${review?.appUser?.appUserName}"> <span
+                                style="color: aliceblue"
+                                th:text="${review?.appUser?.appUserName}"></span>
+                            <a>(</a> <span style="color: aliceblue"
+                                           th:text="${review?.rate}"></span><a>&nbsp;) :</a>
+                            <span style="color: aliceblue"
+                                  th:text="${review?.body}"></span> </a>
+                        </h3>
+
+                        <p class="rate">
+                <span style="color: aliceblue"
+                      th:text="${review?.date}"></span>
+                        </p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer section-->
+<hr/>
+
+</body>
+</html>

@@ -29,5 +29,7 @@ public interface Services {
     AppUser getUserDetailsPage(String username,Model model);
     void saveAuthenticationUser(Model model, Authentication authentication);
     Boolean saveUserInfo(AppUser user);
-    int MoviesPage(Model model);
+    int MoviesPage(Model model,long currentPage);
+    void previousPage(Model model,long currentPage);
+    boolean searchAboutMovie(String title,Model model);
 }
