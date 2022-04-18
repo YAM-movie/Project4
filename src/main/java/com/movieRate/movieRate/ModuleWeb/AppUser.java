@@ -2,12 +2,9 @@ package com.movieRate.movieRate.ModuleWeb;
 
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -30,7 +27,7 @@ public class AppUser  {
     }
 
     private String lastName;
-    private String Email;
+    private String email;
     private String DateOfBarth;
     private String password;
     @CreationTimestamp
@@ -59,7 +56,7 @@ public class AppUser  {
         this.appUserName = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        Email = email;
+        this.email = email;
         DateOfBarth = dateOfBarth;
         this.password = password;
     }
@@ -81,11 +78,11 @@ public class AppUser  {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getDateOfBarth() {

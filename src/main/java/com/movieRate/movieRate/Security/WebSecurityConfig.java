@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -33,8 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/" ,"/movie/2" ,"/js/**", "/css/**","/css**","/login**","/signup",
-                        "/*.css","/*.js").permitAll()
+                .antMatchers("/"  ,"/js/**", "/css/**","/css**","/login**","/signup",
+                        "/*.css","/*.js","/forgot-password","/confirm-reset**","/reset-password").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -43,10 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login?err")
                 .and()
+                .rememberMe().key("YAMmVIES251998yTOOMb@ASWW88yAuSmMoHH").tokenValiditySeconds(604800)/// token validate 1 week
+                .rememberMeParameter("remember-me")
+                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID");
+
+
 
 
     }
