@@ -105,4 +105,11 @@ public class Movie {
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }

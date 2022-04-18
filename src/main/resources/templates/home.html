@@ -24,14 +24,14 @@
     <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
 
         <div class="uk-navbar-left ">
-            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">MOVIE RATE</a>
+            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">YAM MOVIES</a>
             <ul class="uk-navbar-nav">
                 <li>
                     <a href="/">Home</a>
 
                 </li>
                 <li><a href="/trending">TRENDING</a></li>
-                <li><a href="/All_movies">Browser Movie</a></li>
+                <li><a href="/movies/page/1">Browser Movie</a></li>
             </ul>
 
         </div>
@@ -68,48 +68,46 @@
 
 <div class="uk-container uk-container-expand border-radius-4 ">
     <div data-role="carousel" data-cls-controls="fg-white" data-effect="fade" data-controls="false"
-         data-bullets="false" data-height="550px" data-duration="500" data-auto-start="true" data-width="1200px"
+         data-bullets="false" data-height="650px" data-duration="500" data-auto-start="true" data-width="1200px"
          class="pos-top-center">
         <div th:each="movie:${newMovie}" class="">
             <div class="slide"
                  data-period="3000">
-                <img th:src="${movie.imgurl}" style="height: 600px;width: 100%;" class="border-radius-4">
+                <img th:src="${movie.imgurl}" style="height: 600px;width: 1200px;" class="border-radius-4">
             </div>
         </div>
 
 
     </div>
+
 </div>
 <hr>
 <!-- h1 related movie -->
 <div class="uk-container uk-container-expand">
     <div class="d-flex flex-justify-center">
         <h2 class="fg-white uk-align-cente text-bold " style="margin-top: 5px;"> <span
-                class="mif-fire mif-1x fg-crimson" style="margin-right: 5px;"></span>Most viewed Movie
+                class="mif-fire mif-1x fg-crimson" style="margin-right: 5px;"></span>Most Viewed Movie
         </h2>
     </div>
 
 </div>
 
 <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
-    <div uk-slideshow="autoplay: true autoplay-interval: 5000">
-        <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
+    <div uk-slideshow="autoplay:true;">
+        <ul class="uk-slider-items   uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
 
             <li th:each="movieM:${mostViewMovie}">
                 <div class="uk-panel">
-                    <div class="card  " style="border-radius: 5px;">
-
-                        <div class="card-content p-2 "
-                             style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                            <a class="text-bold" th:text="${movieM.title}"
-                               style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                man</a>
-
+                    <div data-role="tile" data-size="large" data-effect="hover-zoom-right" class=" rounded"
+                    >
+                        <div class="slide-front">
+                            <img th:src="${movieM.imgurl}" class="h-300 w-300">
                         </div>
-                        <div class="card-content">
-                            <img th:src="${movieM.imgurl}" style="width: 100%">
+                        <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
+                            <a th:href="'/movie/title/'+${movieM.title}"><span
+                                    class="mif-play mif-lg fg-cyan"></span></a>
                         </div>
-
+                        <span class="branding-bar" th:text="${movieM.title}"></span>
                     </div>
                 </div>
             </li>
@@ -142,19 +140,16 @@
             <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
                 <li th:each="movieT:${topMovie}">
                     <div class="uk-panel">
-                        <div class="card  " style="border-radius: 5px;">
-
-                            <div class="card-content p-2 "
-                                 style="background-color: rgba(255, 25, 0, 1);border-radius: 5px;">
-                                <a class="text-bold" th:text="${movieT.title}"
-                                   style="color: rgb(255, 255, 255); font-size: 16px; margin-bottom: 5px; border-radius: 10px;">Spider
-                                    man</a>
-
+                        <div data-role="tile" data-size="large" data-effect="hover-zoom-right" class=" rounded"
+                        >
+                            <div class="slide-front">
+                                <img th:src="${movieT.imgurl}" class="h-300 w-300">
                             </div>
-                            <div class="card-content">
-                                <img th:src="${movieT.imgurl}" style="width: 100%">
+                            <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
+                                <a th:href="'/movie/title/'+${movieT.title}"><span
+                                        class="mif-play mif-lg fg-cyan"></span></a>
                             </div>
-
+                            <span class="branding-bar" th:text="${movieT.title}"></span>
                         </div>
                     </div>
                 </li>
@@ -177,46 +172,42 @@
         <h2 class="fg-white uk-align-cente text-bold " style="margin-top: 5px;"> <span
                 class="mif-plus mif-1x fg-crimson" style="margin-right: 5px;"></span>New Movie
         </h2>
-
     </div>
+</div>
+<div>
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
         <div uk-slideshow="autoplay: true autoplay-interval: 5000">
-            <ul class="uk-slider-items  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
+            <ul class="uk-slider-items autoplay: true  uk-child-width-1-2 uk-child-width-1-6@m uk-grid-small ">
                 <li th:each="movieN:${newMovie}">
                     <div class="uk-panel">
-                        <div class="card  " style="border-radius: 5px;">
-
-
-                            <div class="card-content">
-                                <img th:src="${movieN.imgurl}" style="height=100%">
+                        <div data-role="tile" data-size="large" data-effect="hover-zoom-right" class=" rounded"
+                        >
+                            <div class="slide-front">
+                                <img th:src="${movieN.imgurl}" class="h-300 w-300">
                             </div>
-
-
+                            <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
+                                <a th:href="'/movie/title/'+${movieN.title}"><span
+                                        class="mif-play mif-lg fg-cyan"></span></a>
+                            </div>
+                            <span class="branding-bar" th:text="${movieN.title}"></span>
                         </div>
-
-
                     </div>
-                    <a class="text-bold" th:text="${movieN.title}"
-                    >Spider
-                        man</a>
-
                 </li>
 
             </ul>
+
             <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
                uk-slider-item="previous"></a>
             <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
                uk-slider-item="next"></a>
-
         </div>
-
     </div>
 </div>
 
 <div class="d-flex flex-justify-center" style="margin-top: 15px;">
-    <button class="uk-button uk-button uk-button-large"
+    <a href="/movies/page/1" class="uk-button uk-button uk-button-large"
             style="background-color: rgba(255, 25, 0, 1); color: white;">Browser Movie
-    </button>
+    </a>
 </div>
 <hr>
 <!-- fotter -->
@@ -330,12 +321,18 @@
                 UIkit.notification("<span uk-icon='icon: check'></span> UserName used before please try another one", { status: 'danger' }, { pos: 'top-center' });
 
 
+
+
+
         </script>
     </div>
 </div>
 <div th:if="${param.secsSignup}">
     <script>
             UIkit.notification("<span uk-icon='icon: check'></span> SignUp Succeeded please Login", { status: 'success' }, { pos: 'top-center' });
+
+
+
 
 
     </script>

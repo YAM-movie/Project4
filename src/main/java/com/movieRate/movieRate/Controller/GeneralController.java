@@ -19,51 +19,26 @@ public class GeneralController {
     @Autowired
     ServiceImp serviceImp;
 
+    /// home page
     @GetMapping("/")
     public String HomePage(Model model, Authentication authentication) {
         serviceImp.mostViewMovie(model);
         serviceImp.topMovie(model);
         serviceImp.newMovie(model);
-        if (authentication!=null) serviceImp.saveAuthenticationUser(model,authentication);
+        if (authentication != null) serviceImp.saveAuthenticationUser(model, authentication);
         serviceImp.getAPi();
         return "home";
     }
 
-    @GetMapping("/movie")
-    public String MoviePage() {
-        return "moviepage";
-    }
 
-
-    @GetMapping("/movies")
-    List<Movie> getAllMovie(Model model) {
-        return serviceImp.getAllMovies(model);
-    }
-
-    @GetMapping("/discover")
-    List<AppUser> getALLUsers(Model model) {
-        return serviceImp.getALLUsers(model);
-    }
-
-    @GetMapping("/getdata")
-    void getdata(Model model) {
-        serviceImp.getAPi();
-    }
-
-    @GetMapping("/userreviews/{id}")
-    String getUserReviews(@PathVariable Long id, Model model) {
-        model.addAttribute("movie", serviceImp.getUserReviews(id, model));
-        return "userreviews";
-    }
-
-
+    // trending page
     @GetMapping("/trending")
     String getTrending(Model model) {
         model.addAttribute("trending", serviceImp.getTrending(model));
         return "trending";
     }
 
-
+    // get movie by title
     @GetMapping("/movies/movie/{title}")
     String getMoviePage(@PathVariable String title, Model model) {
         model.addAttribute("movie", serviceImp.getMovieByTitle(title, model));
@@ -71,12 +46,13 @@ public class GeneralController {
     }
 
 
-
+    /// initialise ModelAttribute as AppUser
     @ModelAttribute("AppUser")
     AppUser user() {
         return new AppUser();
     }
 
+    /// signup method
     @PostMapping("/signup")
     public String signupUser(@ModelAttribute AppUser user) {
         if (serviceImp.Signup(user)) return "redirect:/?secsSignup";
@@ -84,6 +60,7 @@ public class GeneralController {
 
     }
 
+    /// login page
     @GetMapping("/login")
     String login() {
         return "login";
@@ -91,14 +68,16 @@ public class GeneralController {
 
     // getMapping FOR GET nUMBER OF Page
     @GetMapping("/movies/page/{currentPage}")
-    String getMoviePage(Model model, @PathVariable Long currentPage ,Authentication authentication) {
-        List<Movie> test = serviceImp.getPage(currentPage, model);
+    String getMoviePage(Model model, @PathVariable Long currentPage, Authentication authentication) {
+        serviceImp.MoviesPage(model, currentPage);
+//        serviceImp.previousPage(model,currentPage);
         serviceImp.saveAuthenticationUser(model, authentication);
         serviceImp.getPage(currentPage, model);
 
         return "AllMoviePage";
     }
 
+    /// get user information by username
     @GetMapping("/user_Details/{username}")
     public String UserDetailsPage(@PathVariable String username, Model model, Authentication authentication) {
         serviceImp.getUserDetailsPage(username, model);
@@ -108,13 +87,25 @@ public class GeneralController {
 
     /// save edit Information about user
     @PostMapping("/user/edite")
-    String saveUserInfo(@ModelAttribute AppUser user){
-        if (serviceImp.saveUserInfo(user))return "redirect:/user_Details/" +user.getAppUserName();
-        return "redirect:/user_Details/" +user.getAppUserName() +"?err";
+    String saveUserInfo(@ModelAttribute AppUser user) {
+        if (serviceImp.saveUserInfo(user)) return "redirect:/user_Details/" + user.getAppUserName();
+        return "redirect:/user_Details/" + user.getAppUserName() + "?err";
     }
-    @GetMapping("/All_movies")
-    String allMovies(Model model){
-        return "redirect:/movies/page/" + serviceImp.MoviesPage(model);
+
+    /// get movie by title
+    @GetMapping("/movie/title/{title}")
+    public String getMovieData(@PathVariable String title, Model model, Authentication authentication) {
+        model.addAttribute("movie", serviceImp.getMovieByTitle(title, model));
+        serviceImp.saveAuthenticationUser(model, authentication);
+        return "moviePage";
+    }
+
+    /// method for search about movie
+    @GetMapping("/search")
+    String searchBox(@RequestParam String title, Model model, Authentication authentication) {
+        serviceImp.saveAuthenticationUser(model, authentication);
+        if (serviceImp.searchAboutMovie(title, model)) return "AllMoviePage";
+        return "redirect:/movies/page/1";
     }
 
 

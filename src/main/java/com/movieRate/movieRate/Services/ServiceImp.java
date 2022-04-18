@@ -175,10 +175,17 @@ public class ServiceImp implements Services {
     // get Page byNumber
     @Override
     public List<Movie> getPage(Long currentPage, Model model) {
-        Long stopPage = currentPage * 20;
-        if (currentPage > 25) return movieRepo.getPage(1L, 20L);
-        model.addAttribute("movies", movieRepo.getPage(currentPage * 10, stopPage));
-        return movieRepo.getPage(currentPage * 10, stopPage);
+        if (currentPage==1){
+            model.addAttribute("movies", movieRepo.getPage(1L,24L));
+            return movieRepo.getPage(1L, 24L);
+        }
+        if (currentPage >= 25){
+            model.addAttribute("movies", movieRepo.getPage(1L,24L));
+
+        }
+
+       else model.addAttribute("movies", movieRepo.getPage((currentPage * 10)-10, (((currentPage * 10)-10)+23)));
+        return null;
     }
 
     // get user information by id and save it into model.
@@ -212,14 +219,31 @@ public class ServiceImp implements Services {
     }
 
     @Override
-    public int MoviesPage(Model model) {
-       if (model.containsAttribute("moviesPage")){
-           int page= (int) model.getAttribute("moviesPage");
-           model.addAttribute("moviesPage",page+1);
-           return page+1;
-       }
-        model.addAttribute("moviesPage",1);
+    public int MoviesPage(Model model,long currentPage) {
+        if (currentPage<=25)model.addAttribute("moviesPage",currentPage+1);
+        else model.addAttribute("moviesPage",1);
+        if (currentPage>1){
+            model.addAttribute("moviePreviousPage",currentPage-1);
+        }else model.addAttribute("moviePreviousPage",1);
+
         return 1;
+    }
+
+    @Override
+    public void previousPage(Model model, long currentPage) {
+        if (currentPage>1){
+            model.addAttribute("moviePreviousPage",currentPage-1);
+        }
+          model.addAttribute("moviePreviousPage",1);
+    }
+
+    @Override
+    public boolean searchAboutMovie(String title, Model model) {
+        List<Movie> moviesSearch =movieRepo.searchAboutMovie(title);
+        if (moviesSearch.size()==0)return false;
+        model.addAttribute("movies", movieRepo.searchAboutMovie(title));
+        System.out.println(movieRepo.searchAboutMovie(title) +"movie");
+        return true;
     }
 
 }
