@@ -33,16 +33,18 @@ public class GeneralController {
 
     // trending page
     @GetMapping("/trending")
-    String getTrending(Model model) {
-        model.addAttribute("trending", serviceImp.getTrending(model));
-        return "trending";
+    String getTrending(Model model, Authentication authentication) {
+        serviceImp.trendingPage(model);
+        serviceImp.saveAuthenticationUser(model, authentication);
+        return "AllMoviePage";
     }
 
-    // get movie by title
-    @GetMapping("/movies/movie/{title}")
-    String getMoviePage(@PathVariable String title, Model model) {
-        model.addAttribute("movie", serviceImp.getMovieByTitle(title, model));
-        return "moviepage";
+    /// get topMovies page
+    @GetMapping("/top_movies")
+    String topMovies(Model model, Authentication authentication) {
+        serviceImp.saveAuthenticationUser(model, authentication);
+        serviceImp.topMovie(model);
+        return "TopMovies";
     }
 
 

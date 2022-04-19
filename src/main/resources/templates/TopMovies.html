@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welecome To Movie Rate</title>
+  <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+  <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+  <script src="./js/uikit.min.js"></script>
+  <link rel="stylesheet" href="./css/uikit.min.css">
+  <link rel="stylesheet" href="./cssHelper.css">
+  <script src="uikit/dist/js/uikit-icons.min.js"></script>
+</head>
+
+<body>
+<!-- // navbar -->
+<div>
+  <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
+
+    <div class="uk-navbar-left ">
+      <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">YAM MOVIES</a>
+      <ul class="uk-navbar-nav">
+        <li>
+          <a href="/">Home</a>
+
+        </li>
+        <li><a href="/trending">TRENDING</a></li>
+        <li><a href="/movies/page/1">Browser Movie</a></li>
+        <li><a href="/top_movies">Top Movies</a></li>
+      </ul>
+
+    </div>
+
+    <div class="uk-navbar-right" sec:authorize="!isAuthenticated()">
+
+      <ul class="uk-navbar-nav">
+        <a class="uk-button uk-button-default" href="/login" uk-toggle
+           style="margin: 10PX;  color:white ;">lOGIN</a>
+
+        <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
+           style="margin: 10PX; color: white;">SIGN uP</a>
+      </ul>
+
+    </div>
+    <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a href="#" sec:authentication="name">username</a>
+          <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
+              <li class="uk-nav-header"></li>
+              <li><a href="/logout">LogOut</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<hr>
+<style>
+  .grid{
+    color: azure;
+  }
+</style>
+
+<h2 class="text-center" style="color: aliceblue;">Top Movie</h2>
+<hr>
+<div class="grid">
+
+
+  <div class="row"  style="margin: 10px;" th:each="movie:${topMovie}">
+    <div class="cell ">
+      <div><div class="img-container">
+        <img th:src="${movie.imgurl}" style="width: 500px;height: 150px;">
+
+      </div></div>
+    </div>
+    <div class="cell colspan-2" >
+      <div  >Title</div>
+      <div class=""style="margin-top: 10px;"><a th:href="'/movie/title/'+${movie.title}" th:text="${movie.title} +' ' +${movie.release_date}" style="color: red">title</a></div>
+    </div>
+    <div class="cell " style="margin-left: 50px;">
+      <div>
+        Rate
+      </div>
+      <div style="margin-top: 10px;">
+        <input data-role="rating" data-stars="10" data-stared-color="#CE352C" data-static="true"
+               th:data-message="${movie.vot_count}"
+               th:data-value="${movie.rate}">
+      </div>
+    </div>
+
+    <div class="cell offset-3">
+      <div class="text-center">
+
+      </div>
+      <div class="text-center"> <a
+              data-cls-hint="bg-red fg-white drop-shadow"
+              data-role="hint"
+              data-hint-text="Add to favourite"
+              class="mif-plus mif-3x fg-red" style="margin-top: 10px;" ></a></div>
+    </div>
+  </div>
+
+
+  <hr>
+  <div class="d-flex flex-justify-center">
+    <marquee>
+      <h1 style="color: white;" class="text-bold"><span class="mif-copyright mif-1x fg-red"></span> This App made
+        by
+        ASAC STUDENT</h1>
+    </marquee>
+  </div>
+</div>
+</body>
+
+</html>

@@ -125,10 +125,7 @@ public class ServiceImp implements Services {
         if (movies1.size() < 100) movieRepo.saveAll(movies);
     }
 
-    @Override
-    public List<Movie> getTrending(Model m) {
-        return movieRepo.getTrending();
-    }
+
 
     @Override
     public Movie getMovieByTitle(String title, Model m) {
@@ -162,7 +159,6 @@ public class ServiceImp implements Services {
     @Override
     public List<Movie> topMovie(Model model) {
         model.addAttribute("topMovie", movieRepo.topMovie());
-
         return movieRepo.topMovie();
     }
 
@@ -244,6 +240,11 @@ public class ServiceImp implements Services {
         model.addAttribute("movies", movieRepo.searchAboutMovie(title));
         System.out.println(movieRepo.searchAboutMovie(title) +"movie");
         return true;
+    }
+
+    @Override
+    public void trendingPage(Model model) {
+        model.addAttribute("movies",movieRepo.getTrending());
     }
 
 }

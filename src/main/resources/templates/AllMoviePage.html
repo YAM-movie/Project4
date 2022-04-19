@@ -16,6 +16,7 @@
 
 <body>
 <!-- // navbar -->
+<!-- // navbar -->
 <div>
     <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
 
@@ -27,7 +28,8 @@
 
                 </li>
                 <li><a href="/trending">TRENDING</a></li>
-                <li><a href="/All_movies">Browser Movie</a></li>
+                <li><a href="/movies/page/1">Browser Movie</a></li>
+                <li><a href="/top_movies">Top Movies</a></li>
             </ul>
 
         </div>
@@ -61,7 +63,6 @@
 </div>
 <hr>
 
-
 <div class="uk-flex uk-flex-center">
 
     <form class="uk-search uk-search-navbar uk-flex-inline" action="/search" method="get">
@@ -74,12 +75,12 @@
 
 <hr>
 
-<div class="uk-child-width-1-5@m uk-margin-left uk-grid uk-flex uk-flex-center" uk-grid>
+<div class="uk-child-width-1-5@m uk-margin-left uk-grid uk-flex uk-flex-center uk-child-width-1-6@l" uk-grid>
 
     <div data-role="tile" data-size="large" data-effect="hover-zoom-right" th:each="movie:${movies}"
          style="margin: 10px;">
         <div class="slide-front">
-            <img th:src="${movie.imgurl}">
+            <img th:src="${movie.imgurl}" style="width: 100%;height: 100%">
         </div>
         <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
             <a th:href="'/movie/title/'+${movie.title}"><span class="mif-play mif-lg fg-crimson"></span></a>
@@ -90,12 +91,12 @@
 
 
 </div>
-<div class="dropdown-button" style="margin: 20px;">
+<div class="dropdown-button" style="margin: 20px;"  th:if="${moviesPage}">
     <a class="uk-button uk-button-primary uk-flex-right" type="submit"
        th:href="'/movies/page/'+${moviePreviousPage}">Previous</a>
 
 </div>
-<div class="place-right ">
+<div class="place-right " th:if="${moviesPage}">
     <a class="uk-button uk-button-primary" th:href="'/movies/page/'+${moviesPage}" type="submit"
        style="margin: 20px;">Next</a>
 </div>
