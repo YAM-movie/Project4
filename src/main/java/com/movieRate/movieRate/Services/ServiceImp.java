@@ -9,14 +9,16 @@ import com.movieRate.movieRate.ModuleWeb.Review;
 import com.movieRate.movieRate.Repository.AppUserRepo;
 import com.movieRate.movieRate.Repository.MovieRepo;
 import com.movieRate.movieRate.Repository.ReviewRepo;
+import com.movieRate.movieRate.Repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import com.movieRate.movieRate.ModuleWeb.Role;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,6 +39,8 @@ public class ServiceImp implements Services {
 
     @Autowired
     private ReviewRepo reviewRepo;
+    @Autowired
+    RoleRepository roleRepository;
     @Autowired
     PasswordEncoder hashPassword;
 
@@ -60,8 +64,9 @@ public class ServiceImp implements Services {
 
     //get All Reviews for one Movie by id of movie
     @Override
-    public List<Review> getAllReviewForOneMovie(Long MovieId, Model model) {
-        Movie Mov = movieRepo.getById(MovieId);
+    public List<Review> getAllReviewForOneMovie(String title, Model model) {
+        Movie Mov = movieRepo.getMovieByTitle( title);
+        model.addAttribute("reviews", Mov.getReviews());
         return Mov.getReviews();
 
     }
@@ -126,10 +131,12 @@ public class ServiceImp implements Services {
     }
 
 
-
     @Override
-    public Movie getMovieByTitle(String title, Model m) {
+    public Movie getMovieByTitle(String title, Model model) {
+
         Movie movie = movieRepo.getMovieByTitle(title);
+        model.addAttribute("movie",movie);
+
         return movie;
     }
 
@@ -171,16 +178,15 @@ public class ServiceImp implements Services {
     // get Page byNumber
     @Override
     public List<Movie> getPage(Long currentPage, Model model) {
-        if (currentPage==1){
-            model.addAttribute("movies", movieRepo.getPage(1L,24L));
+        if (currentPage == 1) {
+            model.addAttribute("movies", movieRepo.getPage(1L, 24L));
             return movieRepo.getPage(1L, 24L);
         }
-        if (currentPage >= 25){
-            model.addAttribute("movies", movieRepo.getPage(1L,24L));
+        if (currentPage >= 25) {
+            model.addAttribute("movies", movieRepo.getPage(1L, 24L));
 
-        }
-
-       else model.addAttribute("movies", movieRepo.getPage((currentPage * 10)-10, (((currentPage * 10)-10)+23)));
+        } else
+            model.addAttribute("movies", movieRepo.getPage((currentPage * 10) - 10, (((currentPage * 10) - 10) + 23)));
         return null;
     }
 
@@ -215,36 +221,59 @@ public class ServiceImp implements Services {
     }
 
     @Override
-    public int MoviesPage(Model model,long currentPage) {
-        if (currentPage<=25)model.addAttribute("moviesPage",currentPage+1);
-        else model.addAttribute("moviesPage",1);
-        if (currentPage>1){
-            model.addAttribute("moviePreviousPage",currentPage-1);
-        }else model.addAttribute("moviePreviousPage",1);
+    public int MoviesPage(Model model, long currentPage) {
+        if (currentPage <= 25) model.addAttribute("moviesPage", currentPage + 1);
+        else model.addAttribute("moviesPage", 1);
+        if (currentPage > 1) {
+            model.addAttribute("moviePreviousPage", currentPage - 1);
+        } else model.addAttribute("moviePreviousPage", 1);
 
         return 1;
     }
 
     @Override
     public void previousPage(Model model, long currentPage) {
-        if (currentPage>1){
-            model.addAttribute("moviePreviousPage",currentPage-1);
+        if (currentPage > 1) {
+            model.addAttribute("moviePreviousPage", currentPage - 1);
         }
-          model.addAttribute("moviePreviousPage",1);
+        model.addAttribute("moviePreviousPage", 1);
     }
 
     @Override
     public boolean searchAboutMovie(String title, Model model) {
-        List<Movie> moviesSearch =movieRepo.searchAboutMovie(title);
-        if (moviesSearch.size()==0)return false;
+        List<Movie> moviesSearch = movieRepo.searchAboutMovie(title);
+        if (moviesSearch.size() == 0) return false;
         model.addAttribute("movies", movieRepo.searchAboutMovie(title));
-        System.out.println(movieRepo.searchAboutMovie(title) +"movie");
+        System.out.println(movieRepo.searchAboutMovie(title) + "movie");
         return true;
     }
 
     @Override
     public void trendingPage(Model model) {
-        model.addAttribute("movies",movieRepo.getTrending());
+        model.addAttribute("movies", movieRepo.getTrending());
+    }
+
+    @Override
+    public void addComment(String title, Authentication p, Model m, String body, int rate) {
+            AppUser user = appUserRepo.findByappUserName(p.getName());
+            Long datetime = System.currentTimeMillis();
+            Movie movie = movieRepo.getMovieByTitle(title);
+            Review review = new Review(rate, body, user, title);
+            reviewRepo.save(review);
+            movie.getReviews().add(review);
+            movieRepo.save(movie);
+
+    }
+
+
+    @Override
+    public Role findRoleById(Long roleId) {
+        return roleRepository.findById(roleId).orElseThrow();
+    }
+
+    @Override
+    public Role findRoleByName(String name) {
+        return roleRepository.findRoleByName(name).orElseThrow();
     }
 
 }
