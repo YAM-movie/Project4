@@ -33,6 +33,12 @@ public class UserForgetPasswordController {
 
 
 
+
+
+    // https://stackabuse.com/password-encoding-with-spring-security/
+    // to encode our password
+
+    
     /**
      * Display the forgot password page and form
      */
