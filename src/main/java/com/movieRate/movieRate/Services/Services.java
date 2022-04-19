@@ -18,7 +18,6 @@ public interface Services {
     List<Movie> getAPi();
     void saveMovie(Movie movie ,Model model);
     AppUser getUserReviews(Long id, Model m);
-    List<Movie> getTrending(Model m);
     List<Movie> getPage(Long currentPage,Model m);
     Movie getMovieByTitle(String title, Model m);
     List<Movie> getMoviesByRating(double rate, Model m) ;
@@ -32,4 +31,6 @@ public interface Services {
     int MoviesPage(Model model,long currentPage);
     void previousPage(Model model,long currentPage);
     boolean searchAboutMovie(String title,Model model);
+    void trendingPage(Model model);
+
 }

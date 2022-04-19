@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface MovieRepo extends JpaRepository<Movie, Long> {
-    @Query("SELECT u FROM Movie u WHERE u.id > 440")
+    @Query("SELECT u FROM Movie u WHERE u.id > 420")
     List<Movie> getTrending();
 
 
