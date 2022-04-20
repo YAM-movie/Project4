@@ -87,7 +87,7 @@
                         <div><br/></div>
                         <div class="btn-transform  red">
                             <div><div uk-lightbox>
-                                <a class="uk-button uk-button-default" th:href="${movie.trailer}" data-caption="YouTube" data-attrs="width: 1280; height: 720;">Watch Trailer</a>
+                                <a class="uk-button uk-button-default" th:href="${movie?.trailer}" data-caption="YouTube" data-attrs="width: 1280; height: 720;">Watch Trailer</a>
                             </div>
                             </div>
                             <div><i class="ion-play"></i>
@@ -146,7 +146,7 @@
                         </div>
                         <div class="row">
                             <div class="col-10">
-                                <input name="MovieId" th:value="${movie.id}" hidden="true">
+                                <input name="title" th:value="${movie.title}" hidden="true">
                                 <!--                                <input name="mov" th:value="${movie}" >-->
                                 <input data-role="rating" data-stars="10" data-value="${movie?.rate}"
                                        data-stared-color="cyan" name="rate" id="rate">
@@ -176,7 +176,7 @@
                                 style="color: aliceblue"
                                 th:text="${review?.appUser?.appUserName}"></span>
                             <a>(</a> <span style="color: aliceblue"
-                                           th:text="${review?.rate}"></span><a>&nbsp;) :</a>
+                                           th:text="${review?.rate}"></span><a style="color: aliceblue">&nbsp;Stars&nbsp;) :</a>
                             <span style="color: aliceblue"
                                   th:text="${review?.body}"></span> </a>
                         </h3>

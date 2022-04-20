@@ -2,6 +2,8 @@ package com.movieRate.movieRate.ModuleWeb;
 
 
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -11,11 +13,22 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @CreationTimestamp
     private Timestamp date;
     private String body;
     private int rate;
     @ManyToOne
     AppUser appUser;
+
+    public Review(int rate, String body, AppUser user, String title) {
+        this.rate = rate;
+        this.body = body;
+        this.appUser = user;
+    }
+
+    public Review() {
+
+    }
 
     public Long getId() {
         return id;

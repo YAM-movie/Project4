@@ -41,5 +41,13 @@ We made a Discord server for our project to make meeting take discussion and pla
 7-	After pulling the last update of main branch and check every team member if he push something.   
 8-	I inform our team members that I will merge to avoid conflict.     
 
+# Repo and Tooling
+We create our project repo and group project named YAM-movie and it's private and here is it.
+Group Members :
+Mohamad saqer
+Yousef Abu-Qatrieh
+Ahmad Al-Khalili
+PM Tools
+https://trello.com/b/cYxgTCe7/project-management
 
 

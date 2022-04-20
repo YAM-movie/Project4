@@ -9,7 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+=======
+import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.util.List;
 
@@ -98,9 +102,16 @@ public class GeneralController {
     /// get movie by title
     @GetMapping("/movie/title/{title}")
     public String getMovieData(@PathVariable String title, Model model, Authentication authentication) {
-        model.addAttribute("movie", serviceImp.getMovieByTitle(title, model));
+        serviceImp.getMovieByTitle(title,model);
+        serviceImp.getAllReviewForOneMovie(title,model);
         serviceImp.saveAuthenticationUser(model, authentication);
         return "moviePage";
+    }
+
+    @PostMapping("/comment")
+    public RedirectView addReview(@RequestParam String title, Authentication p, Model m, String body, int rate) {
+        serviceImp.addComment(title, p, m, body, rate);
+        return new RedirectView("/movie/title/" + title);
     }
 
     /// method for search about movie

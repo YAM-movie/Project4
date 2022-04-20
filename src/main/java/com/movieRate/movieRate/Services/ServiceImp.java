@@ -9,17 +9,23 @@ import com.movieRate.movieRate.ModuleWeb.Review;
 import com.movieRate.movieRate.Repository.AppUserRepo;
 import com.movieRate.movieRate.Repository.MovieRepo;
 import com.movieRate.movieRate.Repository.ReviewRepo;
+
 import com.movieRate.movieRate.Security.UserDetailsImp;
+import com.movieRate.movieRate.Repository.RoleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.movieRate.movieRate.ModuleWeb.Role;
+
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,6 +46,8 @@ public class ServiceImp implements Services {
 
     @Autowired
     private ReviewRepo reviewRepo;
+    @Autowired
+    RoleRepository roleRepository;
     @Autowired
     PasswordEncoder hashPassword;
 
@@ -63,8 +71,9 @@ public class ServiceImp implements Services {
 
     //get All Reviews for one Movie by id of movie
     @Override
-    public List<Review> getAllReviewForOneMovie(Long MovieId, Model model) {
-        Movie Mov = movieRepo.getById(MovieId);
+    public List<Review> getAllReviewForOneMovie(String title, Model model) {
+        Movie Mov = movieRepo.getMovieByTitle( title);
+        model.addAttribute("reviews", Mov.getReviews());
         return Mov.getReviews();
 
     }
@@ -130,8 +139,11 @@ public class ServiceImp implements Services {
 
 
     @Override
-    public Movie getMovieByTitle(String title, Model m) {
+    public Movie getMovieByTitle(String title, Model model) {
+
         Movie movie = movieRepo.getMovieByTitle(title);
+        model.addAttribute("movie",movie);
+
         return movie;
     }
 
@@ -249,6 +261,7 @@ public class ServiceImp implements Services {
     }
 
 
+
     /// get User Logged and get him from dataBase  and get Favorite Movies
     @Override
     public boolean favouriteMovieForUser(Model model, Authentication authentication) {
@@ -262,6 +275,29 @@ public class ServiceImp implements Services {
         model.addAttribute("FavMovie", movies);
 
         return true;
+
+    @Override
+    public void addComment(String title, Authentication p, Model m, String body, int rate) {
+            AppUser user = appUserRepo.findByappUserName(p.getName());
+            Long datetime = System.currentTimeMillis();
+            Movie movie = movieRepo.getMovieByTitle(title);
+            Review review = new Review(rate, body, user, title);
+            reviewRepo.save(review);
+            movie.getReviews().add(review);
+            movieRepo.save(movie);
+
+    }
+
+
+    @Override
+    public Role findRoleById(Long roleId) {
+        return roleRepository.findById(roleId).orElseThrow();
+    }
+
+    @Override
+    public Role findRoleByName(String name) {
+        return roleRepository.findRoleByName(name).orElseThrow();
+
     }
 
     /// get User Logged and  get movie  and get Favorite Movies and delete movie

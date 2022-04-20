@@ -12,6 +12,10 @@ public class Movie {
     private Long id;
     private String title;
 
+    public Movie() {
+
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
