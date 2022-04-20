@@ -9,15 +9,22 @@ import com.movieRate.movieRate.ModuleWeb.Review;
 import com.movieRate.movieRate.Repository.AppUserRepo;
 import com.movieRate.movieRate.Repository.MovieRepo;
 import com.movieRate.movieRate.Repository.ReviewRepo;
+
+import com.movieRate.movieRate.Security.UserDetailsImp;
 import com.movieRate.movieRate.Repository.RoleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.movieRate.movieRate.ModuleWeb.Role;
+
 
 
 import java.io.BufferedReader;
@@ -253,6 +260,22 @@ public class ServiceImp implements Services {
         model.addAttribute("movies", movieRepo.getTrending());
     }
 
+
+
+    /// get User Logged and get him from dataBase  and get Favorite Movies
+    @Override
+    public boolean favouriteMovieForUser(Model model, Authentication authentication) {
+        UserDetailsImp userLogged = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        AppUser userLogged = (AppUser) authentication.getPrincipal();
+        List<Movie> movies = appUserRepo.getById(userLogged.getUser().getId()).getFavoriteMovies();
+        if (movies.size() == 0) {
+            model.addAttribute("Nodata", "No available Movie Found");
+            return false;
+        }
+        model.addAttribute("FavMovie", movies);
+
+        return true;
+
     @Override
     public void addComment(String title, Authentication p, Model m, String body, int rate) {
             AppUser user = appUserRepo.findByappUserName(p.getName());
@@ -274,6 +297,31 @@ public class ServiceImp implements Services {
     @Override
     public Role findRoleByName(String name) {
         return roleRepository.findRoleByName(name).orElseThrow();
+
     }
+
+    /// get User Logged and  get movie  and get Favorite Movies and delete movie
+    @Override
+    public void deleteFavMovie(Long id, Authentication authentication, Model model) {
+        UserDetailsImp loggedInUser = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Movie movie = movieRepo.getById(id);
+        AppUser userFromDataBase =appUserRepo.getById(loggedInUser.getUser().getId());
+        userFromDataBase.getFavoriteMovies().remove(movie);
+        appUserRepo.save(userFromDataBase);
+    }
+
+    @Override
+    public void addMovieToMyFavourite(Long id , RedirectAttributes attributes) {
+        UserDetailsImp loggedInUser = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Movie movie = movieRepo.getById(id);
+        AppUser userFromDataBase =appUserRepo.getById(loggedInUser.getUser().getId());
+        if (userFromDataBase.getFavoriteMovies().contains(movie))
+           attributes.addFlashAttribute("movieExist", "The Movie Exist");
+        else {
+            userFromDataBase.getFavoriteMovies().add(movie);
+            appUserRepo.save(userFromDataBase);
+        }
+    }
+
 
 }

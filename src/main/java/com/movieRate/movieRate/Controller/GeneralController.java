@@ -9,7 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+=======
 import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.util.List;
 
@@ -117,6 +121,27 @@ public class GeneralController {
         if (serviceImp.searchAboutMovie(title, model)) return "AllMoviePage";
         return "redirect:/movies/page/1";
     }
+    //foundDATA
+    @GetMapping("/my_favourite")
+    String getFavouritePage(Model model,Authentication authentication){
+       serviceImp.favouriteMovieForUser(model, authentication);
+       serviceImp.saveAuthenticationUser(model, authentication);
+        return "Myfavorite";
+
+    }
+    @GetMapping("/add_movie_my_favourite/{id}")
+    String addMovieToMyFavourite(@PathVariable Long id ,RedirectAttributes attributes){
+        serviceImp.addMovieToMyFavourite(id,attributes);
+        return "redirect:/my_favourite";
+    }
+    // delete movie from favourite movies to user
+    @GetMapping("/my_favourite/delete_fav_movie/{id}")
+    String deleteFavMovie(@PathVariable Long id ,Authentication authentication, Model model){
+        serviceImp.deleteFavMovie(id,authentication,model);
+        return "redirect:/my_favourite";
+    }
+
+
 
 
 }

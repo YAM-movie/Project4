@@ -6,7 +6,11 @@ import com.movieRate.movieRate.ModuleWeb.Review;
 import com.movieRate.movieRate.ModuleWeb.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -37,8 +41,16 @@ public interface Services {
     void previousPage(Model model,long currentPage);
     boolean searchAboutMovie(String title,Model model);
     void trendingPage(Model model);
+
+    boolean favouriteMovieForUser(Model model,Authentication authentication);
+
+    void deleteFavMovie(Long id, Authentication authentication, Model model );
+
+    void addMovieToMyFavourite(Long id , RedirectAttributes attributes);
+
     void addComment( String title, Authentication p, Model m, String body, int rate);
 
     Role findRoleById(Long roleId);
     Role findRoleByName(String name);
+
 }

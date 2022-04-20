@@ -1,3 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welecome To Movie Rate</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script src="./js/uikit.min.js"></script>
+    <link rel="stylesheet" href="./css/uikit.min.css">
+    <link rel="stylesheet" href="cssHelper.css">
+
+
+    <!-- for date picker -->
+
+
+</head>
+
+<body>
+<!-- // navbar -->
+<div class=" uk-container  uk-position-relative">
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold " style="font-size: 18px;" uk-navbar>
+
+        <div class="uk-navbar-left ">
+            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">YAM MOVIES</a>
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="/">Home</a>
+
+                </li>
+                <li><a href="/trending">TRENDING</a></li>
+                <li><a href="/movies/page/1">Browser Movie</a></li>
+                <li><a href="/top_movies">Top Movies</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="/my_favourite">My Favourite</a></li>
+            </ul>
+
+        </div>
+
+        <div class="uk-navbar-right " sec:authorize="!isAuthenticated()">
+
+            <ul class="uk-navbar-nav">
+                <a class="uk-button uk-button-default " href="/login" uk-toggle
+                   style="margin-right: 5PX;  color:white ;">lOGIN</a>
+
+                <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
+                   style="margin-right: 5PX; color: white;">SIGN uP</a>
+            </ul>
+
+        </div>
+        <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#" sec:authentication="name">username</a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
+                            <li class="uk-nav-header"></li>
+                            <li><a href="/logout">LogOut</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<hr>
+
+
+
+<div class="uk-cover-container">
+    <h1 class="text-center" style="color: rgba(255, 25, 0, 1);text-transform: uppercase;"> New Movies every Day You can watch and REVIEW movies have fun </h1>
+    <div class="text-center"><span class="mif-video-camera mif-5x fg-red"></span></div>
+
+</div>
+
+<hr>
+<!-- h1 related movie -->
+<div class="uk-container uk-container-expand">
+    <div class="d-flex flex-justify-center">
+        <h2 class="fg-white uk-align-cente text-bold " style="margin-top: 5px;"> <span
+                class="mif-fire mif-1x fg-crimson" style="margin-right: 5px;"></span>Most Viewed Movie
+        </h2>
+    </div>
+
+</div>
+
+<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+    <div uk-slideshow="autoplay:true;">
+        <ul class="uk-slider-items uk-margin-auto-right@m uk-child-width-auto@m  uk-child-width-auto uk-child-width-auto@xl uk-child-width-auto@s  uk-margin-auto-right@l">
+
+            <li th:each="movieM:${mostViewMovie}" style="margin-right: 10px">
+                <div class="uk-panel uk-margin-right">
+                    <div data-role="tile" data-size="large" data-effect="hover-zoom-up" class=" rounded"
+                    >
+                        <div class="slide-front">
+                            <img th:src="${movieM.imgurl}" style="height: 100%;width: 100%" >
+                        </div>
+                        <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
+
+                            <p class="text-center">
+
+                                <a th:href="'/movie/title/'+${movieM.title}"><span
+                                        class="mif-play mif-lg fg-cyan"></span></a>
+                            </p>
+
+
+
+                            <span class="branding-bar" th:text="${movieM.title} + ' Rate ' + ${movieM.rate}"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+
+        </ul>
+
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+           uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+           uk-slider-item="next"></a>
+    </div>
+</div>
+<hr>
+
+<!-- h1 Top movie -->
+<div class="uk-container uk-container-expand  ">
+    <div class="d-flex flex-justify-center">
+
+        <h2 class="fg-white uk-align-cente text-bold " style="margin-top: 5px;"> <span
+                class="mif-star-full mif-1x fg-crimson" style="margin-right: 5px;"></span>Top Movie
+        </h2>
+    </div>
+
+</div>
+
+<div>
+    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+        <div uk-slideshow="autoplay: true autoplay-interval: 5000">
+            <ul class="uk-slider-items uk-margin-auto-right@m uk-child-width-auto@m  uk-child-width-auto uk-child-width-auto@xl uk-child-width-auto@s  uk-margin-auto-right@l ">
+                <li th:each="movieT:${topMovie}"  style="margin-right: 10px">
+                    <div class="uk-panel">
+                        <div data-role="tile" data-size="large" data-effect="hover-zoom-right" class=" rounded"
+                        >
+                            <div class="slide-front">
+                                <img th:src="${movieT.imgurl}"  style="height: 100%;width: 100%">
+                            </div>
+                            <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
+                                <a th:href="'/movie/title/'+${movieT.title}"><span
+                                        class="mif-play mif-lg fg-cyan"></span></a>
+                            </div>
+                            <span class="branding-bar" th:text="${movieT.title}"></span>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+               uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+               uk-slider-item="next"></a>
+        </div>
+    </div>
+</div>
+<hr>
+
+<!-- new movie -->
+<div class="uk-container uk-container-expand  ">
+    <div class="d-flex flex-justify-center">
+
+        <h2 class="fg-white uk-align-cente text-bold " style="margin-top: 5px;"> <span
+                class="mif-plus mif-1x fg-crimson" style="margin-right: 5px;"></span>New Movie
+        </h2>
+    </div>
+</div>
+<div>
+    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+        <div uk-slideshow="autoplay: true autoplay-interval: 5000">
+            <ul class="uk-slider-items uk-margin-auto-right@m uk-child-width-auto@m  uk-child-width-auto uk-child-width-auto@xl uk-child-width-auto@s  uk-margin-auto-right@l">
+                <li th:each="movieN:${newMovie}" style="margin-right: 10px">
+                    <div class="uk-panel ">
+                        <div data-role="tile" data-size="large" data-effect="hover-zoom-right" class=" rounded"
+                        >
+                            <div class="slide-front" >
+                                <img th:src="${movieN.imgurl}" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="slide-back d-flex flex-justify-center flex-align-center p-4 op-mauve">
+                                <a th:href="'/movie/title/'+${movieN.title}"><span
+                                        class="mif-play mif-lg fg-cyan"></span></a>
+                            </div>
+                            <span class="branding-bar" th:text="${movieN.title}"></span>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+               uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+               uk-slider-item="next"></a>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-justify-center" style="margin-top: 15px;">
+    <a href="/movies/page/1" class="uk-button uk-button uk-button-large"
+            style="background-color: rgba(255, 25, 0, 1); color: white;">Browser Movie
+    </a>
+</div>
+<hr>
+<!-- fotter -->
+<div class="d-flex flex-justify-center">
+    <marquee>
+        <h1 style="color: white;" class="text-bold"><span class="mif-copyright mif-1x fg-red"></span> This App made
+            by
+            ASAC STUDENT</h1>
+    </marquee>
+</div>
+</div>
+
+<!-- signup model -->
+<div id="modal-signup" class=" uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-width-xlarge" bg-close="true">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <form class="uk-form-horizontal uk-margin-large" data-role="validator" action="javascript:" method="post"
+              th:object="${AppUser}" th:action="@{/signup}">
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">User name</label>
+                <div class="uk-form-controls">
+                    <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                           placeholder="Enter User Name"
+                           data-validate="required pattern=^[a-zA-Z0-9_.-]*$ minlength=6"
+                           uk-tooltip="title: Example :Mohammed998; delay: 500" th:field="*{appUserName}">
+                    <span class="invalid_feedback">
+         You can use only text and number and ( _ ) sign and must have at least 6 character
+      </span>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">First Name</label>
+                <div class="uk-form-controls">
+                    <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                           placeholder="Enter First Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$ "
+                           uk-tooltip="title: Example :Mohammed; delay: 500" th:field="*{firstName}">
+                    <span class="invalid_feedback">
+                            You can use only text and number and ( _ ) sign
+                        </span>
+
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Last Name</label>
+                <div class="uk-form-controls">
+                    <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
+                           placeholder="Enter Last Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$"
+                           uk-tooltip="title: Example :saqr; delay: 500" th:field="*{lastName}">
+                    <span class="invalid_feedback">
+                            You can use only text and number and ( _ ) sign
+                        </span>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Email</label>
+                <div class="uk-form-controls">
+                    <input type="text" data-role="input" data-prepend="<span class='mif-mail'></span>"
+                           placeholder="Enter Last Name" data-validate="email"
+                           uk-tooltip="title: Example :tt@gmail.com; delay: 500" th:field="*{Email}">
+                    <span class="invalid_feedback">
+                            You Must Submit Email form
+                        </span>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Birthday</label>
+                <div class="uk-form-controls">
+                    <input type="text" data-role="calendarpicker" value="1998/12/21"
+                           data-prepend="<span class='mif-calendar'></span>" th:field="*{DateOfBarth}">
+
+                </div>
+            </div>
+
+
+            <div class="uk-margin ">
+                <label class="uk-form-label" for="form-horizontal-text">Password</label>
+                <div class="uk-form-controls">
+                    <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
+                           data-validate="required minlength=8" placeholder="Enter Password" name="password"
+                           th:field="*{password}">
+                    <span class="invalid_feedback">
+                            Password must have at least 8 character
+                        </span>
+
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">retype password</label>
+                <div class="uk-form-controls">
+                    <input type="password" data-role="input" data-prepend="<span class='mif-lock'></span>"
+                           data-validate="required compare=password" placeholder="Enter Password">
+                    <span class="invalid_feedback">
+                            The Password must match
+                        </span>
+
+                </div>
+            </div>
+
+
+            <div class="uk-modal-footer uk-margin">
+
+                <button class="button primary" type="submit">SignUp</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div th:if="${param.errorSignup}">
+        <script>
+                UIkit.notification("<span uk-icon='icon: check'></span> UserName used before please try another one", { status: 'danger' }, { pos: 'top-center' });
+
+
+
+
+
+        </script>
+    </div>
+</div>
+<div th:if="${param.secsSignup}">
+    <script>
+            UIkit.notification("<span uk-icon='icon: check'></span> SignUp Succeeded please Login", { status: 'success' }, { pos: 'top-center' });
+    </script>
+</div>
+
+
+</body>
+
+=======
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
@@ -344,5 +686,6 @@
 
 
 </body>
+
 
 </html>
