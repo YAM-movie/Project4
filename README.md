@@ -40,6 +40,24 @@ We made a Discord server for our project to make meeting take discussion and pla
 6-	Team member who will be able to merge on the repo.   
 7-	After pulling the last update of main branch and check every team member if he push something.   
 8-	I inform our team members that I will merge to avoid conflict.     
+# WireFrame Pictures
+![Screenshot 2022-04-14 035806](https://user-images.githubusercontent.com/97651232/164132799-f34d35aa-daa4-4a61-b9c8-6efa6149c66d.png)     
+
+![Screenshot 2022-04-14 035940](https://user-images.githubusercontent.com/97651232/164132815-1ae74222-d289-4a7d-a476-db8a10a40204.png)    
+
+![Screenshot 2022-04-14 040001](https://user-images.githubusercontent.com/97651232/164132830-da2a5d11-cee5-4244-804c-f6d3224b9643.png)   
+
+![Screenshot 2022-04-14 040023](https://user-images.githubusercontent.com/97651232/164132840-5614634f-39da-4345-b594-e0fd3609d266.png)    
+
+![Screenshot 2022-04-14 040126](https://user-images.githubusercontent.com/97651232/164132849-ef184260-74fb-4eea-9bf5-c93611de12a8.png)     
+
+![Screenshot 2022-04-14 043019](https://user-images.githubusercontent.com/97651232/164132862-ea26a3a3-7114-44a7-b836-44fe3a80ba8a.png)      
+
+![Screenshot 2022-04-14 043614](https://user-images.githubusercontent.com/97651232/164132890-69c4420b-2ef9-4a2c-b190-463c946c92a4.png)     
+
+# Domain Modeling
+![Yam Movie website](https://user-images.githubusercontent.com/97651232/164133993-718ebc9f-ae45-483c-9c61-8735153fae4b.png)   
+
 
 # Repo and Tooling
 We create our project repo and group project named YAM-movie and it's private and here is it.
