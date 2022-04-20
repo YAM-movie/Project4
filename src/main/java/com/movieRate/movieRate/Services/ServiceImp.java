@@ -275,7 +275,7 @@ public class ServiceImp implements Services {
         model.addAttribute("FavMovie", movies);
 
         return true;
-
+    }
     @Override
     public void addComment(String title, Authentication p, Model m, String body, int rate) {
             AppUser user = appUserRepo.findByappUserName(p.getName());
