@@ -38,6 +38,7 @@
                 <li><a href="/trending">TRENDING</a></li>
                 <li><a href="/movies/page/1">Browser Movie</a></li>
                 <li><a href="/top_movies">Top Movies</a></li>
+                <li><a href="/my_favourite">My Favourite</a></li>
             </ul>
 
         </div>
@@ -93,7 +94,7 @@
                             </div>
                         </div>
                         <div class="btn-transform red">
-                            <div><a href="#" class=" greenbtn"> <i class="ion-card"></i> ADD TO
+                            <div><a  th:href="'/add_movie_my_favourite/'+${movie.id}" class=" greenbtn"> <i class="ion-card"></i> ADD TO
                                 FAVORITE</a>
                             </div>
                             <div><i class="ion-card"></i></a></div>

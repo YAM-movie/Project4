@@ -23,7 +23,7 @@ public interface MovieRepo extends JpaRepository<Movie, Long> {
     @Query("SELECT u FROM Movie u WHERE u.id>440")
     List<Movie> mostViewMovie();
 
-    @Query("SELECT u FROM Movie u WHERE u.rate >= 7")
+    @Query("SELECT u FROM Movie u WHERE u.rate  >= 7 order by u.rate desc")
     List<Movie> topMovie();
 
     @Query(value = "select * from movie A WHERE CAST(A.release_date AS varchar(256)) >= '2019-01-1';", nativeQuery = true)

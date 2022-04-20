@@ -9,14 +9,17 @@ import com.movieRate.movieRate.ModuleWeb.Review;
 import com.movieRate.movieRate.Repository.AppUserRepo;
 import com.movieRate.movieRate.Repository.MovieRepo;
 import com.movieRate.movieRate.Repository.ReviewRepo;
+import com.movieRate.movieRate.Security.UserDetailsImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -126,7 +129,6 @@ public class ServiceImp implements Services {
     }
 
 
-
     @Override
     public Movie getMovieByTitle(String title, Model m) {
         Movie movie = movieRepo.getMovieByTitle(title);
@@ -171,16 +173,15 @@ public class ServiceImp implements Services {
     // get Page byNumber
     @Override
     public List<Movie> getPage(Long currentPage, Model model) {
-        if (currentPage==1){
-            model.addAttribute("movies", movieRepo.getPage(1L,24L));
+        if (currentPage == 1) {
+            model.addAttribute("movies", movieRepo.getPage(1L, 24L));
             return movieRepo.getPage(1L, 24L);
         }
-        if (currentPage >= 25){
-            model.addAttribute("movies", movieRepo.getPage(1L,24L));
+        if (currentPage >= 25) {
+            model.addAttribute("movies", movieRepo.getPage(1L, 24L));
 
-        }
-
-       else model.addAttribute("movies", movieRepo.getPage((currentPage * 10)-10, (((currentPage * 10)-10)+23)));
+        } else
+            model.addAttribute("movies", movieRepo.getPage((currentPage * 10) - 10, (((currentPage * 10) - 10) + 23)));
         return null;
     }
 
@@ -215,36 +216,76 @@ public class ServiceImp implements Services {
     }
 
     @Override
-    public int MoviesPage(Model model,long currentPage) {
-        if (currentPage<=25)model.addAttribute("moviesPage",currentPage+1);
-        else model.addAttribute("moviesPage",1);
-        if (currentPage>1){
-            model.addAttribute("moviePreviousPage",currentPage-1);
-        }else model.addAttribute("moviePreviousPage",1);
+    public int MoviesPage(Model model, long currentPage) {
+        if (currentPage <= 25) model.addAttribute("moviesPage", currentPage + 1);
+        else model.addAttribute("moviesPage", 1);
+        if (currentPage > 1) {
+            model.addAttribute("moviePreviousPage", currentPage - 1);
+        } else model.addAttribute("moviePreviousPage", 1);
 
         return 1;
     }
 
     @Override
     public void previousPage(Model model, long currentPage) {
-        if (currentPage>1){
-            model.addAttribute("moviePreviousPage",currentPage-1);
+        if (currentPage > 1) {
+            model.addAttribute("moviePreviousPage", currentPage - 1);
         }
-          model.addAttribute("moviePreviousPage",1);
+        model.addAttribute("moviePreviousPage", 1);
     }
 
     @Override
     public boolean searchAboutMovie(String title, Model model) {
-        List<Movie> moviesSearch =movieRepo.searchAboutMovie(title);
-        if (moviesSearch.size()==0)return false;
+        List<Movie> moviesSearch = movieRepo.searchAboutMovie(title);
+        if (moviesSearch.size() == 0) return false;
         model.addAttribute("movies", movieRepo.searchAboutMovie(title));
-        System.out.println(movieRepo.searchAboutMovie(title) +"movie");
+        System.out.println(movieRepo.searchAboutMovie(title) + "movie");
         return true;
     }
 
     @Override
     public void trendingPage(Model model) {
-        model.addAttribute("movies",movieRepo.getTrending());
+        model.addAttribute("movies", movieRepo.getTrending());
     }
+
+
+    /// get User Logged and get him from dataBase  and get Favorite Movies
+    @Override
+    public boolean favouriteMovieForUser(Model model, Authentication authentication) {
+        UserDetailsImp userLogged = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        AppUser userLogged = (AppUser) authentication.getPrincipal();
+        List<Movie> movies = appUserRepo.getById(userLogged.getUser().getId()).getFavoriteMovies();
+        if (movies.size() == 0) {
+            model.addAttribute("Nodata", "No available Movie Found");
+            return false;
+        }
+        model.addAttribute("FavMovie", movies);
+
+        return true;
+    }
+
+    /// get User Logged and  get movie  and get Favorite Movies and delete movie
+    @Override
+    public void deleteFavMovie(Long id, Authentication authentication, Model model) {
+        UserDetailsImp loggedInUser = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Movie movie = movieRepo.getById(id);
+        AppUser userFromDataBase =appUserRepo.getById(loggedInUser.getUser().getId());
+        userFromDataBase.getFavoriteMovies().remove(movie);
+        appUserRepo.save(userFromDataBase);
+    }
+
+    @Override
+    public void addMovieToMyFavourite(Long id , RedirectAttributes attributes) {
+        UserDetailsImp loggedInUser = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Movie movie = movieRepo.getById(id);
+        AppUser userFromDataBase =appUserRepo.getById(loggedInUser.getUser().getId());
+        if (userFromDataBase.getFavoriteMovies().contains(movie))
+           attributes.addFlashAttribute("movieExist", "The Movie Exist");
+        else {
+            userFromDataBase.getFavoriteMovies().add(movie);
+            appUserRepo.save(userFromDataBase);
+        }
+    }
+
 
 }

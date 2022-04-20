@@ -5,6 +5,7 @@ import com.movieRate.movieRate.ModuleWeb.Movie;
 import com.movieRate.movieRate.ModuleWeb.Review;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -32,5 +33,9 @@ public interface Services {
     void previousPage(Model model,long currentPage);
     boolean searchAboutMovie(String title,Model model);
     void trendingPage(Model model);
+    boolean favouriteMovieForUser(Model model,Authentication authentication);
 
+    void deleteFavMovie(Long id, Authentication authentication, Model model );
+
+    void addMovieToMyFavourite(Long id , RedirectAttributes attributes);
 }
