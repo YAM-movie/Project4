@@ -16943,19 +16943,19 @@ ul {
 .redbtn i {
     margin-right: 10px;
 }
-.greenbtn {
+.reedbtn {
     font-family: 'Dosis', sans-serif;
     font-size: 14px;
     color: #ffffff;
     font-weight: bold;
     text-transform: uppercase;
-    background-color: #7a36f8;
+    background-color: #e32525;
     padding: 13px 25px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
-.greenbtn i {
+.reedbtn i {
     margin-right: 10px;
     font-size: 16px;
 }

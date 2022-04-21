@@ -30,6 +30,6 @@ public interface MovieRepo extends JpaRepository<Movie, Long> {
     List<Movie> newMovie();
 
     Movie getMovieByTitle(String title);
-    @Query(value = "SELECT u FROM Movie u WHERE u.title LIKE CONCAT('%',:title,'%')")
+    @Query(value = "SELECT u FROM Movie u WHERE lower(u.title) LIKE lower( CONCAT('%',:title,'%'))")
     List<Movie> searchAboutMovie(String title);
 }

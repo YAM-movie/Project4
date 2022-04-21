@@ -39,12 +39,10 @@
     </script>
 
 
-
     <script src="https://cdn.jsdelivr.net/gh/BMSVieira/moovie.js@latest/js/moovie.min.js"></script>
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BMSVieira/moovie.js@latest/css/moovie.min.css">
-
 
 
     <script>
@@ -121,7 +119,7 @@
                         <div class="btn-transform  red">
                             <div>
                                 <div uk-lightbox>
-                                    <a class="uk-button uk-button-default" th:href="${movie?.trailer}"
+                                    <a  class=" reedbtn" th:href="${movie?.trailer}"
                                        data-caption="Trailer" data-attrs="width: 1280; height: 720;">Watch Trailer</a>
                                 </div>
                             </div>
@@ -129,7 +127,7 @@
                             </div>
                         </div>
                         <div class="btn-transform red">
-                            <div><a href="#" class=" greenbtn"> <i class="ion-card"></i> ADD TO
+                            <div><a  th:href="'/add_movie_my_favourite/'+${movie.id}" class=" reedbtn"> <i class="ion-card"></i> ADD TO
                                 FAVORITE</a>
                             </div>
                             <div><i class="ion-card"></i></a></div>
@@ -137,7 +135,7 @@
                         <div class="btn-transform  red">
                             <div>
                                 <div uk-lightbox>
-                                    <a class="uk-button uk-button-default" href="${movie?.movieurl}"
+                                    <a  class=" reedbtn" href="${movie?.movieurl}"
                                        onclick="lightbox_open();" >Watch Full Movie
                                     </a>
                                 </div>
