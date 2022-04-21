@@ -28,10 +28,19 @@ public class Movie {
     private String lang;
     private double vot_count;
     private String trailer;
+
+    private String movieurl;
     @OneToMany(fetch = FetchType.EAGER)
     List<Review> reviews;
 
 
+    public String getMovieurl() {
+        return movieurl;
+    }
+
+    public void setMovieurl(String movieurl) {
+        this.movieurl = movieurl;
+    }
 
     public Long getId() {
         return id;
