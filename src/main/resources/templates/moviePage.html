@@ -38,7 +38,6 @@
                 <li><a href="/trending">TRENDING</a></li>
                 <li><a href="/movies/page/1">Browser Movie</a></li>
                 <li><a href="/top_movies">Top Movies</a></li>
-                <li><a href="/my_favourite">My Favourite</a></li>
             </ul>
 
         </div>
@@ -73,6 +72,7 @@
 <hr>
 
 <div class="hero mv-single-hero">
+
     <div class="container">
     </div>
 </div>
@@ -94,19 +94,20 @@
                             </div>
                         </div>
                         <div class="btn-transform red">
-                            <div><a  th:href="'/add_movie_my_favourite/'+${movie.id}" class=" greenbtn"> <i class="ion-card"></i> ADD TO
+                            <div><a href="#" class=" greenbtn"> <i class="ion-card"></i> ADD TO
                                 FAVORITE</a>
                             </div>
                             <div><i class="ion-card"></i></a></div>
                         </div>
                         <div class="btn-transform  red">
-                            <div><a href="https://www.youtube.com/embed/o-0hcF97wy0" class=" Violetbtn"> <i
-                                    class="ion-card"></i> Watch Full
-                                Movie</a>
+                            <div><div uk-lightbox>
+                                <a class="uk-button uk-button-default" th:href="${movie?.movieurl}" >Watch Full Movie</a>
+                            </div>
                             </div>
                             <div><i class="ion-play"></i>
                             </div>
                         </div>
+
 
                     </div>
                 </div>
@@ -136,11 +137,13 @@
                 <div class="Description">
                     <h2 style="color: aliceblue">Description</h2>
                     <a style="color: aliceblue"> <h5 style="color: aliceblue;line-height:1.5;margin-top:10px;font-size: 24px;"
-                                                       th:text="${movie?.overview}" ></h5> </a>
+                                                     th:text="${movie?.overview}" ></h5> </a>
 
                 </div>
+
                 <!--Form-->
                 <form action="/comment" method="POST">
+
                     <div class="box">
                         <div class="col-6">
                         </div>
@@ -164,27 +167,27 @@
                 <div class="title-hd-sm">
                     <h4>reviews and comments</h4>
 
-                    <a  href="#" class="time">View All <i class="ion-ios-arrow-right"></i></a>
+
                 </div>
                 <!--                <button onclick="view()">button</button>-->
 
                 <div style="color: aliceblue" th:each="review:${reviews}">
                     <!-- movie user review -->
                     <div class="mv-user-review-item">
-                        <h3><a
+                        <h3  ><a
                                 th:href="'/user_Details/'+${review?.appUser?.appUserName}"> <span
                                 style="color: aliceblue"
                                 th:text="${review?.appUser?.appUserName}"></span>
                             <a>(</a> <span style="color: aliceblue"
-                                           th:text="${review?.rate}"></span><a style="color: aliceblue">&nbsp;Stars&nbsp;) :</a>
-                            <span style="color: aliceblue"
-                                  th:text="${review?.body}"></span> </a>
+                                           th:text="${review?.rate}"></span><a style="color: aliceblue">&nbsp;Stars&nbsp;) </a>
+                            <span style="color: aliceblue; font-size:8pt"
+                                  th:text="${review?.date}"></span>  </a>
                         </h3>
 
-                        <p class="rate">
-                <span style="color: aliceblue"
-                      th:text="${review?.date}"></span>
-                        </p>
+
+                        <span style="color: aliceblue ; text-decoration:underline ;color:darkred"
+                              th:text="${review?.body}"></span>
+
 
 
                     </div>
@@ -193,7 +196,14 @@
         </div>
     </div>
 </div>
-
+<video data-role="video-player"
+       th:data-poster="${movie?.imgurl}"
+       data-volume=".5"
+       data-aspect-ratio="hd"
+       data-controls-hide="1000"
+       data-src="https://o4-po3-s-atz8.vs50.club/watch/f870314a3da4de7eHHH6dchO-H6CxWB6P.L9fJ%7C9TRlyyik3j6t0G%7Clw__.MVFMTnJnbVZYcDF1YlFvNzVXekFxS2xaQUh1RUhaV1Z5TkN1emZlRm1FZXBhVDJXcGFtcVFQRGdCV1dPSTNBcHh1QklCQkNHMTB4RmdCNWhjL25JTnkyeUliYjVoa0xnNVJvY3h1dW10a2dySzNyYnIvMCszZU9wV1RnVnU0cXlvYTUwS2RiQ2lXNVdVcCtWRSt5bmFNRUJaT0JMM1A2QUo3ZGtXVWpEQmY0a0dONGpFY21sTm9GWHBJVWRTK3MzbjFHRkxPVm9HVDl4V0VPSHgyZUtNeng4R1k1RG1yUHRucHRLMWVxUWhhVm9mdUdhUXFZdXIrbS9VaVowdWErNzRiZXhxWXNLWGFhYi9FdG5XQ3BSOThKRHdkVHNUUGdoQmZVOEY1VHZiUkkvYVd0OXFzTE1za09JWlVTMEQvaEtSbjZSajVsd0ZGMUlYdXdLMklhZlloUWdmMjF5NjhNVDNKVXg4djJlWko1bkhvelF0aTl5TDZvcnYzNUhtdjFWbVBZME9zUVNyMWZDK2NXZXAvRk9hUnFWZ1pRSDNFUXdYc2NaNHM3bGZwdllJdz09">
+    <!--    data-src="${movie?.movieurl}"-->
+</video>
 <!-- footer section-->
 <hr/>
 
