@@ -58,13 +58,14 @@ public class AppUser  {
     public AppUser() {
     }
 
-    public AppUser(String username, String firstName, String lastName, String email, String dateOfBarth, String password) {
+    public AppUser(String username, String firstName, String lastName, String email, String dateOfBarth, String password ,Set<Role> roles) {
         this.appUserName = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         DateOfBarth = dateOfBarth;
         this.password = password;
+        this.roles=roles;
     }
 
     public String getFirstName() {

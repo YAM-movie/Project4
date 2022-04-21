@@ -28,7 +28,7 @@ public class Movie {
     private String lang;
     private double vot_count;
     private String trailer;
-
+    @Column(length = 1000)
     private String movieurl;
     @OneToMany(fetch = FetchType.EAGER)
     List<Review> reviews;
