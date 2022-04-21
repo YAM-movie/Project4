@@ -21,7 +21,7 @@ public interface Services {
     //get All Reviews for one Movie by title of movie
 
     List<Review> getAllReviewForOneMovie(String title, Model model);
-    AppUser getUser(Long id,Model m);
+
     List<AppUser> getALLUsers(Model model);
     List<Movie> getAPi();
     void saveMovie(Movie movie ,Model model);
@@ -53,4 +53,9 @@ public interface Services {
     Role findRoleById(Long roleId);
     Role findRoleByName(String name);
 
+    void editMovieForm(Movie movie, Model model);
+
+    void saveMovieForEdit(Long id, Model model);
+
+    void firstRun();
 }

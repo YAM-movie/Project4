@@ -5,6 +5,7 @@ import com.movieRate.movieRate.ModuleWeb.Movie;
 import com.movieRate.movieRate.Services.ServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ public class GeneralController {
         serviceImp.newMovie(model);
         if (authentication != null) serviceImp.saveAuthenticationUser(model, authentication);
         serviceImp.getAPi();
+        serviceImp.firstRun();
         return "home";
     }
 
@@ -139,6 +141,22 @@ public class GeneralController {
     String deleteFavMovie(@PathVariable Long id ,Authentication authentication, Model model){
         serviceImp.deleteFavMovie(id,authentication,model);
         return "redirect:/my_favourite";
+    }
+
+    // TODO: 4/21/2022  all this method for admin
+
+    @GetMapping("/edit_movie_page/{id}")
+    String editMoviePage(Model model,Authentication authentication ,@PathVariable Long id){
+        serviceImp.saveAuthenticationUser(model,authentication);
+        serviceImp.saveMovieForEdit(id,model);
+        return "editMoviePage";
+    }
+
+    @PostMapping("/edit_movie_form")
+    String editMovieForm(Model model ,@ModelAttribute Movie movie ,Authentication authentication){
+        serviceImp.editMovieForm(movie,model);
+        serviceImp.saveAuthenticationUser(model,authentication);
+        return "redirect:/edit_movie_page/" +movie.getId();
     }
 
 

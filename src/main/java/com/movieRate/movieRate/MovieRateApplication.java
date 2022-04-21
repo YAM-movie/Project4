@@ -11,18 +11,18 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MovieRateApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(MovieRateApplication.class);
+//	private static final Logger log = LoggerFactory.getLogger(MovieRateApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(MovieRateApplication.class, args);
 
 	}
-	@Bean
-	CommandLineRunner initDatabase(RoleRepository roleRepository) {
-		return args -> {
-			log.info("Preloading " + roleRepository.save(new Role("USER")));
-			log.info("Preloading " + roleRepository.save(new Role("ADMIN")));
-		};
-	}
+//	@Bean
+//	CommandLineRunner initDatabase(RoleRepository roleRepository) {
+//		return args -> {
+//			log.info("Preloading " + roleRepository.save(new Role("USER")));
+//			log.info("Preloading " + roleRepository.save(new Role("ADMIN")));
+//		};
+//	}
 
 
 }

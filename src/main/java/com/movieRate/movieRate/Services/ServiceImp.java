@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ServiceImp implements Services {
@@ -85,13 +86,8 @@ public class ServiceImp implements Services {
         return (AppUser) user.getReviews();
     }
 
-    //get user by id of user
-    @Override
-    public AppUser getUser(Long id, Model m) {
-        AppUser user = new AppUser("mohammed", "sadsasda", "dsad", "dfsfds", "dfada", "123");
-        m.addAttribute("userinfo", user);
-        return user;
-    }
+
+
     //get All users by id of user
 
     @Override
@@ -158,8 +154,9 @@ public class ServiceImp implements Services {
         AppUser user1 = appUserRepo.getByappUserName(user.getAppUserName());
         System.out.println(user.getAppUserName());
         if (user1 != null) return false;
-        String hashPass = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
-        AppUser NewUser = new AppUser(user.getAppUserName(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBarth(), hashPass);
+        String hashPass = hashPassword.encode(user.getPassword());
+        Set<Role> role = roleRepository.findRoleByName("USER");
+        AppUser NewUser = new AppUser(user.getAppUserName(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBarth(), hashPass,role);
         appUserRepo.save(NewUser);
         return true;
     }
@@ -296,8 +293,35 @@ public class ServiceImp implements Services {
 
     @Override
     public Role findRoleByName(String name) {
-        return roleRepository.findRoleByName(name).orElseThrow();
+//        return roleRepository.findRoleByName(name);
+return null;
+    }
 
+    @Override
+    public void editMovieForm(Movie movie, Model model) {
+        Movie movieFromDataBase = movieRepo.getById(movie.getId());
+        movieFromDataBase.setVot_count(movie.getVot_count());
+        movieFromDataBase.setRelease_date(movie.getRelease_date());
+        movieFromDataBase.setRate(movie.getRate());
+        movieFromDataBase.setImgurl(movie.getImgurl());
+        movieFromDataBase.setOverview(movie.getOverview());
+        movieFromDataBase.setLang(movie.getLang());
+        movieFromDataBase.setTitle(movie.getTitle());
+       movieRepo.save(movieFromDataBase);
+    }
+
+    @Override
+    public void saveMovieForEdit(Long id, Model model) {
+        model.addAttribute("movieForEdit",movieRepo.getById(id));
+    }
+
+    @Override
+    public void firstRun() {
+        if (roleRepository.findRoleByName("ADMIN").size()==0){
+            roleRepository.save(new Role("ADMIN"));
+            roleRepository.save(new Role("USER"));
+            appUserRepo.save(new AppUser("mohammed998","mohammed","saqr","saqerabu9@gmail.com","2/5/1998", hashPassword.encode("123"),roleRepository.findRoleByName("ADMIN")));
+        }
     }
 
     /// get User Logged and  get movie  and get Favorite Movies and delete movie

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" >
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welecome To Movie Rate</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css" />
+
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <link rel="stylesheet" href="/css/uikit.min.css" >
+    <link rel="stylesheet" href="/cssHelper.css" />
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="uikit/dist/js/uikit-icons.min.js"></script>
+
+
+    <title>UserDetails</title>
+</head>
+
+<body>
+<!-- // navbar -->
+<div>
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold" style="font-size: 18px;" uk-navbar>
+
+        <div class="uk-navbar-left ">
+            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">MOVIE RATE</a>
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="/">Home</a>
+
+                </li>
+                <li><a href="/trending">TRENDING</a></li>
+                <li><a href="/movies/page/1">Browser Movie</a></li>
+                <li><a href="/top_movies">Top Movies</a></li>
+                <li ><a href="/my_favourite">My Favourite</a></li>
+            </ul>
+
+        </div>
+
+        <div class="uk-navbar-right" sec:authorize="!isAuthenticated()">
+
+            <ul class="uk-navbar-nav">
+                <a class="uk-button uk-button-default" href="/login" uk-toggle
+                   style="margin: 10PX;  color:white ;">lOGIN</a>
+
+                <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
+                   style="margin: 10PX; color: white;">SIGN uP</a>
+            </ul>
+
+        </div>
+        <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#"  sec:authentication="name">username</a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a th:href="'/user_Details/'+${userLogged.user.appUserName}">My profile</a></li>
+                            <li class="uk-nav-header"></li>
+                            <li><a href="/logout">LogOut</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="uk-alert-danger" uk-alert th:if="${param.err}">
+    <a class="uk-alert-close" uk-close></a>
+    <p>Password in wrong please try again.</p>
+</div>
+<div class="">
+    <div class="uk-margin">
+        <div>
+            <div
+                    class="uk-card   uk-card-body uk-light uk-animation-slide-right border bd-crimson border-size-2 border-radius-4 border-ridge">
+                <h3 class="uk-card-title">Your information</h3>
+                <hr>
+                <form class="uk-form-horizontal uk-margin-large" data-role="validator" action="javascript:"
+                      method="post" th:action="@{/edit_movie_form}" th:method="post"  >
+                        <!-- ttitle -->
+                    <div class="uk-margin">
+                        <input name="id" th:value="${movieForEdit.id}" hidden="true" >
+                        <label class="uk-form-label" for="form-horizontal-text">title</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" 
+                                   placeholder="Enter title"
+                                 class="w-50"
+                                   th:data-default-value="${movieForEdit.title}" id="userDis"   name="title">
+                            
+                        </div>
+                    </div>
+
+                    <!-- overview -->
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">overview</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" 
+                                   placeholder="Enter overview" 
+                                   class="w-50"
+                                   th:data-default-value="${movieForEdit.overview}" disabled id="firstDis"  name="overview">
+                           
+
+                        </div>
+                    </div>
+                    <!-- imgurl -->
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">imgurl</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input"  placeholder="Enter imgurl" 
+                            class="w-50"
+                                   th:data-default-value="${movieForEdit.imgurl}"  id="lastDis"  name="imgurl">
+                            
+                        </div>
+                    </div>
+                    <!-- release_date -->
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">release_date</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="calendarpicker"
+                                   class="w-50"
+                                   th:value="${movieForEdit.release_date}"  id="birthlDis"  name="release_date">
+
+                        </div>
+                    </div>
+                    <!-- rate -->
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">rate</label>
+                        <div class="uk-form-controls">
+                            <input type="number"  data-role="input"
+                                   placeholder="Enter rate"
+                                   
+                                    th:data-default-value="${movieForEdit.rate}"  id="emailDis"  name="rate" class="w-50">
+                           
+                        </div>
+                    </div>
+                  
+
+                    <!-- lang -->
+                    <div class="uk-margin "  id="passDiv">
+                        <label class="uk-form-label" for="form-horizontal-text">lang</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input"    th:data-default-value="${movieForEdit.lang}"
+                            class="w-50"
+                                   placeholder="Enter lang"  name="lang">
+                           
+
+                        </div>
+                    </div>
+                    <!-- vot_count -->
+                    <div class="uk-margin " >
+                        <label class="uk-form-label" for="form-horizontal-text">vot_count</label>
+                        <div class="uk-form-controls">
+                            <input type="number" data-role="input" name="vot_count" th:data-default-value="${movieForEdit.vot_count}"
+                                   placeholder="Enter vot_count" class="w-50">
+                        </div>
+                    </div>
+                    <!-- trailer -->
+                    <div class="uk-margin " id="rePassDiv">
+                        <label class="uk-form-label" for="form-horizontal-text">trailer</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" name="trailer" th:data-default-value="${movieForEdit.trailer}"
+                                   placeholder="Enter trailer" class="w-50">
+                        </div>
+                    </div>
+                    <!-- watch Url -->
+                    <div class="uk-margin " id="rePassDiv">
+                        <label class="uk-form-label" for="form-horizontal-text">watch Url</label>
+                        <div class="uk-form-controls">
+                            <input type="text" data-role="input" name="watchUrl" th:data-default-value="${movieForEdit?.movieurl}"
+                                   placeholder="Enter trailer" class="w-50">
+                        </div>
+                    </div>
+
+
+
+                  
+                    <button class="uk-button uk-button-primary" type="submit"  id="saveAppear">
+                        Save
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="d-flex flex-justify-center">
+    <marquee>
+        <h1 style="color: white;" class="text-bold"><span class="mif-copyright mif-1x fg-red"></span> This App made
+            by
+            ASAC STUDENT</h1>
+    </marquee>
+</div>
+</div>
+</body>
+
+</html>

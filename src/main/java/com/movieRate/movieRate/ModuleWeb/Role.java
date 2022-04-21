@@ -29,13 +29,7 @@ public class Role {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+
 
     public String getName() {
         return name;
