@@ -89,7 +89,7 @@
                             <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
                                    placeholder="Enter User Name"
                                    data-validate="required pattern=^[a-zA-Z0-9_.-]*$ minlength=6"
-                                   th:data-default-value="${userDetailInfo.appUserName}" id="userDis" disabled  name="appUserName">
+                                   th:data-default-value="${userDetailInfo.appUserName}" id="userDis" disabled  name="appUserName" class="w-50">
                             <span class="invalid_feedback">
                                 You can use only text and number and ( _ ) sign and minimum length=6
                             </span>
@@ -100,7 +100,7 @@
                         <div class="uk-form-controls">
                             <input type="text" data-role="input" data-prepend="<span class='mif-user'></span>"
                                    placeholder="Enter First Name" data-validate="required pattern=^[a-zA-Z0-9_.-]*$ "
-                                   th:data-default-value="${userDetailInfo.firstName}" disabled id="firstDis"  name="firstName">
+                                   th:data-default-value="${userDetailInfo.firstName}" disabled id="firstDis"  name="firstName" >
                             <span class="invalid_feedback">
                                 You can use only text and number and ( _ ) sign
                             </span>
