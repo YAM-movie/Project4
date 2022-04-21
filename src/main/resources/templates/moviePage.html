@@ -12,13 +12,36 @@
     <link rel="stylesheet" href="/css/uikit.min.css">
     <link rel="stylesheet" href="/cssHelper.css">
     <link rel="stylesheet" href="/css/singlemovie.css">
+    <script>
+        window.document.onkeydown = function (e) {
+            if (!e) {
+                e = event;
+            }
+            if (e.keyCode == 27) {
+                lightbox_close();
+            }
+        }
 
-    <!--    forMovie-->
-    <!--    // Javascript-->
-    // Javascript
+        function lightbox_open() {
+            var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+            window.scrollTo(0, 0);
+            document.getElementById('light').style.display = 'block';
+            document.getElementById('fade').style.display = 'block';
+            lightBoxVideo.play();
+        }
+
+        function lightbox_close() {
+            var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+            document.getElementById('light').style.display = 'none';
+            document.getElementById('fade').style.display = 'none';
+            lightBoxVideo.pause();
+        }
+    </script>
+
+
     <script src="https://cdn.jsdelivr.net/gh/BMSVieira/moovie.js@latest/js/moovie.min.js"></script>
 
-    // CSS
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BMSVieira/moovie.js@latest/css/moovie.min.css">
 
 
@@ -112,8 +135,9 @@
                         <div class="btn-transform  red">
                             <div>
                                 <div uk-lightbox>
-                                    <button class="uk-button uk-button-default" th:href="${movie?.movieurl}"
-                                       data-caption="Trailer" data-attrs="width: 1280; height: 720;">Watch Trailer</button>
+                                    <a class="uk-button uk-button-default" href="${movie?.movieurl}"
+                                       onclick="lightbox_open();" >Watch Full Movie
+                                    </a>
                                 </div>
                             </div>
                             <div><i class="ion-play"></i>
@@ -210,22 +234,15 @@
     </div>
 </div>
 
-<!--<div class="dialog" data-role="dialog" id="demoDialog1">-->
-<!--    <div class="dialog-title">Use Windows location service?</div>-->
-<!--    <div class="dialog-content">-->
-<!--        <video data-role="video-player"-->
-<!--               th:data-poster="${movie?.imgurl}"-->
-<!--               data-volume=".5"-->
-<!--               data-aspect-ratio="hd"-->
-<!--               data-controls-hide="1000"-->
-<!--               th:data-src="${movie?.movieurl}"-->
+<div id="light">
+    <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
+    <video id="VisaChipCardVideo" width="800" controls>
+        <source th:src="${movie?.movieurl}" type="video/mp4">
+    </video>
+</div>
 
-<!--        >-->
-<!--        </video>-->
+<div id="fade" onClick="lightbox_close();"></div>
 
-<!--    </div>-->
-
-<!--</div>-->
 
 <!-- footer section-->
 <hr/>

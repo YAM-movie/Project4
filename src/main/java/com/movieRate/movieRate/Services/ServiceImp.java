@@ -151,9 +151,10 @@ public class ServiceImp implements Services {
 
     @Override
     public boolean Signup(AppUser user) {
-        AppUser user1 = appUserRepo.getByappUserName(user.getAppUserName());
+        AppUser usernameCheck = appUserRepo.getByappUserName(user.getAppUserName());
+        AppUser EmailCheck = appUserRepo.getByappUserName(user.getEmail());
         System.out.println(user.getAppUserName());
-        if (user1 != null) return false;
+        if (usernameCheck != null && EmailCheck!=null) return false;
         String hashPass = hashPassword.encode(user.getPassword());
         Set<Role> role = roleRepository.findRoleByName("USER");
         AppUser NewUser = new AppUser(user.getAppUserName(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBarth(), hashPass,role);
