@@ -28,12 +28,13 @@ public class GeneralController {
     /// home page
     @GetMapping("/")
     public String HomePage(Model model, Authentication authentication) {
+        serviceImp.getAPi();
+        serviceImp.firstRun();
         serviceImp.mostViewMovie(model);
         serviceImp.topMovie(model);
         serviceImp.newMovie(model);
         if (authentication != null) serviceImp.saveAuthenticationUser(model, authentication);
-        serviceImp.getAPi();
-        serviceImp.firstRun();
+
         return "home";
     }
 
