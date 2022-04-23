@@ -99,7 +99,7 @@ public class ServiceImp implements Services {
     @Override
     public List<Movie> getAPi() {
 
-        File file = new File("./Api.json");
+        File file = new File("Api.json");
         BufferedReader bufferedReader;
         String line;
         StringBuilder JSONString = new StringBuilder();

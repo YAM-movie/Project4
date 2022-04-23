@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class GeneralController {
 
     /// home page
     @GetMapping("/")
-    public String HomePage(Model model, Authentication authentication) {
+    public String HomePage(Model model, Authentication authentication) throws IOException {
         serviceImp.getAPi();
         serviceImp.firstRun();
         serviceImp.mostViewMovie(model);

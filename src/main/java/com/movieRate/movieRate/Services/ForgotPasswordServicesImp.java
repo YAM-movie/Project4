@@ -63,7 +63,7 @@ public class ForgotPasswordServicesImp implements ForgotPasswordServices {
                 );
                 message.setSubject("Testing Gmail TLS");
                 message.setText("To complete the password reset process, please click here:\n "
-                        + "http://localhost:4040/confirm-reset?token=" + restPasswordToken.getConfirmationToken());
+                        + "https://movierate2.herokuapp.com/confirm-reset?token=" + restPasswordToken.getConfirmationToken());
 
                 Transport.send(message);
 
