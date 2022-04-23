@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welecome To Movie Rate</title>
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
     <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
     <script src="/js/uikit.min.js"></script>
     <link rel="stylesheet" href="/css/uikit.min.css">
@@ -134,10 +134,12 @@
                         </div>
                         <div class="btn-transform  red">
                             <div>
-                                <div uk-lightbox>
-                                    <a  class=" reedbtn" href="${movie?.movieurl}"
-                                       onclick="lightbox_open();" >Watch Full Movie
-                                    </a>
+                                <div >
+                                    <div >
+                                        <a  class=" reedbtn"
+                                            onclick="lightbox_open();" >Watch Full Movie
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                             <div><i class="ion-play"></i>
@@ -174,25 +176,28 @@
                 <div class="Description">
                     <h2 style="color: aliceblue">Description</h2>
                     <a style="color: aliceblue"><h5
-                            style="color: aliceblue;line-height:1.5;margin-top:10px;font-size: 24px;"
+                            style="color: aliceblue;line-height:1.5;margin-top:10px;font-size: 16px;"
                             th:text="${movie?.overview}"></h5></a>
 
                 </div>
-
+                <hr>
+                <h3  style="color: white;border-radius: 2px ">Add your Review</h3>
                 <!--Form-->
-                <form action="/comment" method="POST">
+                <form action="/comment" method="POST" class="" style="padding: 10px; ">
 
-                    <div class="box">
+                    <div class="box " >
                         <div class="col-6">
                         </div>
                         <div class="row">
+
                             <div class="col-10">
+
                                 <input name="title" th:value="${movie.title}" hidden="true">
                                 <!--                                <input name="mov" th:value="${movie}" >-->
                                 <input data-role="rating" data-stars="10" data-value="${movie?.rate}"
-                                       data-stared-color="cyan" name="rate" id="rate">
+                                       data-stared-color="red" name="rate" id="rate" data-message="Your Rate" data-star-color="green">
 
-                                <textarea type="text" class="input" name="body" id="body"
+                                <textarea type="text" class="input text-center" name="body" id="body"
                                           placeholder="Your Comment Here"></textarea>
                                 <button type="submit" value="Submit" style="margin-left: 6cm" class='btn-box'>Add
                                     Comment
@@ -209,31 +214,34 @@
                 </div>
                 <!--                <button onclick="view()">button</button>-->
 
-                <div style="color: aliceblue" th:each="review:${reviews}">
+                <div style="color: aliceblue" th:each="review:${reviews}" class="title-hd-sm">
                     <!-- movie user review -->
                     <div class="mv-user-review-item">
                         <h3><a
-                                th:href="'/user_Details/'+${review?.appUser?.appUserName}"> <span
-                                style="color: aliceblue"
-                                th:text="${review?.appUser?.appUserName}"></span>
-                            <a>(</a> <span style="color: aliceblue"
+                                > <span
+                                style="color: crimson"
+                                th:text="${review?.appUser?.firstName}"></span>
+                            <a style="color: white">(</a> <span style="color: aliceblue;font-size: 16px"
                                            th:text="${review?.rate}"></span><a style="color: aliceblue">&nbsp;Stars&nbsp;) </a>
                             <span style="color: aliceblue; font-size:8pt"
                                   th:text="${review?.date}"></span> </a>
                         </h3>
 
 
-                        <span style="color: aliceblue ; text-decoration:underline ;color:darkred"
+                        <span style="font-size: 14px;"
                               th:text="${review?.body}"></span>
 
 
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
 
+</script>
 <div id="light">
     <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
     <video id="VisaChipCardVideo" width="800" controls>
@@ -242,7 +250,6 @@
 </div>
 
 <div id="fade" onClick="lightbox_close();"></div>
-
 
 <!-- footer section-->
 <hr/>

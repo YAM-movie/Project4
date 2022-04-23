@@ -73,7 +73,7 @@ public class ServiceImp implements Services {
     //get All Reviews for one Movie by id of movie
     @Override
     public List<Review> getAllReviewForOneMovie(String title, Model model) {
-        Movie Mov = movieRepo.getMovieByTitle( title);
+        Movie Mov = movieRepo.getMovieByTitle(title);
         model.addAttribute("reviews", Mov.getReviews());
         return Mov.getReviews();
 
@@ -307,6 +307,8 @@ return null;
         movieFromDataBase.setOverview(movie.getOverview());
         movieFromDataBase.setLang(movie.getLang());
         movieFromDataBase.setTitle(movie.getTitle());
+        movieFromDataBase.setTrailer(movie.getTrailer());
+        movieFromDataBase.setMovieurl(movie.getMovieurl());
        movieRepo.save(movieFromDataBase);
     }
 

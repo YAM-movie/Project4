@@ -98,11 +98,13 @@
                     <div class="uk-margin">
                         <label class="uk-form-label" for="form-horizontal-text">overview</label>
                         <div class="uk-form-controls">
-                            <input type="text" data-role="input" 
-                                   placeholder="Enter overview" 
-                                   class="w-50"
-                                   th:data-default-value="${movieForEdit.overview}" disabled id="firstDis"  name="overview">
-                           
+<!--                            <input type="text" data-role="input"-->
+<!--                                   >-->
+                           <textarea
+                                      class="w-50"
+                                      th:text="${movieForEdit?.overview}"    name="overview">
+
+                           </textarea>
 
                         </div>
                     </div>
@@ -159,19 +161,20 @@
                         </div>
                     </div>
                     <!-- trailer -->
-                    <div class="uk-margin " id="rePassDiv">
+                    <div class="uk-margin " >
                         <label class="uk-form-label" for="form-horizontal-text">trailer</label>
                         <div class="uk-form-controls">
                             <input type="text" data-role="input" name="trailer" th:data-default-value="${movieForEdit.trailer}"
                                    placeholder="Enter trailer" class="w-50">
                         </div>
                     </div>
+
                     <!-- watch Url -->
-                    <div class="uk-margin " id="rePassDiv">
+                    <div class="uk-margin" >
                         <label class="uk-form-label" for="form-horizontal-text">watch Url</label>
                         <div class="uk-form-controls">
-                            <input type="text" data-role="input" name="watchUrl" th:data-default-value="${movieForEdit?.movieurl}"
-                                   placeholder="Enter trailer" class="w-50">
+                            <input type="text" data-role="input" name="movieurl" th:data-default-value="${movieForEdit?.movieurl}"
+                                   placeholder="Enter movieurl" class="w-50">
                         </div>
                     </div>
 
@@ -189,6 +192,7 @@
 
     </div>
 </div>
+
 <div class="d-flex flex-justify-center">
     <marquee>
         <h1 style="color: white;" class="text-bold"><span class="mif-copyright mif-1x fg-red"></span> This App made
@@ -196,7 +200,7 @@
             ASAC STUDENT</h1>
     </marquee>
 </div>
-</div>
+
 </body>
 
 </html>

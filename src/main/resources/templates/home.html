@@ -21,11 +21,11 @@
 
 <body>
 <!-- // navbar -->
-<div class=" uk-container  uk-position-relative">
-    <nav class="uk-navbar-container  uk-navbar-transparent text-bold " style="font-size: 18px;" uk-navbar>
+
+    <nav class="uk-navbar-container  uk-navbar-transparent text-bold uk-width-*-1-1" style="font-size: 18px;" uk-navbar>
 
         <div class="uk-navbar-left ">
-            <a class="uk-navbar-item uk-logo" href="#" style="color: aliceblue;">YAM MOVIES</a>
+            <a class="uk-navbar-item uk-logo" href="/" style="color: aliceblue;">YAM MOVIES</a>
             <ul class="uk-navbar-nav">
                 <li>
                     <a href="/">Home</a>
@@ -42,14 +42,17 @@
         <div class="uk-navbar-right " sec:authorize="!isAuthenticated()">
 
             <ul class="uk-navbar-nav">
-                <a class="uk-button uk-button-default " href="/login" uk-toggle
-                   style="margin-right: 5PX;  color:white ;">lOGIN</a>
+               <a class="uk-button uk-button-default " href="/login" uk-toggle
+                       style="margin-right: 5PX;  color:white ;">lOGIN</a>
 
                 <a class="uk-button uk-button-default" href="#modal-signup" uk-toggle
-                   style="margin-right: 5PX; color: white;">SIGN uP</a>
+                       style="margin-right: 5PX; color: white;">SIGN uP</a>
+
+
             </ul>
 
         </div>
+
         <div class="uk-navbar-right" sec:authorize="isAuthenticated()">
             <ul class="uk-navbar-nav">
                 <li>
@@ -65,7 +68,7 @@
             </ul>
         </div>
     </nav>
-</div>
+
 <hr>
 
 
